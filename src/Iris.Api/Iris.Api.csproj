@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.4" />
@@ -24,13 +25,14 @@
   <ItemGroup>
     <ProjectReference Include="..\Iris.FrameCore\Iris.FrameCore.csproj" />
     <ProjectReference Include="..\Iris.Model\Iris.Models.csproj" />
+    <ProjectReference Include="..\Iris.Service\Iris.Service.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="NLog.config">
+    <Content Update="NLog.Linux.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Update="NLog.Staging.config">
+    <Content Update="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

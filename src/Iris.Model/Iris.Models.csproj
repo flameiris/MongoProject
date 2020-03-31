@@ -6,11 +6,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="MongoDB.Bson" Version="2.10.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Response\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Iris.Infrastructure\Iris.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

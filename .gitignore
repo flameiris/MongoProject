@@ -10,4 +10,7 @@
 /src/Iris.FrameCore/bin
 /src/Iris.Api/obj
 /src/Iris.Api/bin
+/src/Iris.Infrastructure/bin
+/src/Iris.Infrastructure/obj
 /src/.vs
+/src/.vscode

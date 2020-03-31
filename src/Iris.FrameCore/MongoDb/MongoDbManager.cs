@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
@@ -91,6 +92,7 @@ namespace Iris.FrameCore.MongoDb
 
         /// <summary>
         /// 异步根据条件获取总数
+        /// 注：条件字段尽可能都是索引字段
         /// </summary>
         /// <param name="filter">条件</param>
         /// <returns></returns>
@@ -109,7 +111,24 @@ namespace Iris.FrameCore.MongoDb
 
 
 
-
+        /// <summary>
+        /// 依据条件查询数据
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        public async Task<T> GetFirstOrDefaultAsync(Expression<Func<T, bool>> @where = null)
+        {
+            try
+            {
+                var task = await _collection.FindAsync(@where);
+                return task.ToList().FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Mongodb 依据条件查询数据错误", e);
+                return null;
+            }
+        }
         /// <summary>
         /// 依据条件查询数据
         /// </summary>
@@ -176,6 +195,39 @@ namespace Iris.FrameCore.MongoDb
             {
                 _logger.LogError("Mongodb 依据查询条件查询所有数据 包含显示字段 排序错误", e);
                 return null;
+            }
+        }
+
+        /// <summary>
+        ///  分页查询数据列表
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="sort"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<T>> GetByPageAsync(FilterDefinition<T> filter, int pageIndex, int pageSize, SortDefinition<T> sort = null)
+        {
+            try
+            {
+                //没有查询条件
+                if (filter == null)
+                {
+                    if (sort == null)
+                        return await _collection.Find(_ => true).Skip((pageIndex - 1) * pageSize).Limit(pageSize).ToListAsync();
+                    //排序
+                    return await _collection.Find(_ => true).Sort(sort).Skip((pageIndex - 1) * pageSize).Limit(pageSize).ToListAsync();
+                }
+
+                if (sort == null) return await _collection.Find(filter).Skip((pageIndex - 1) * pageSize).Limit(pageSize).ToListAsync();
+                //排序
+                return await _collection.Find(filter).Sort(sort).Skip((pageIndex - 1) * pageSize).Limit(pageSize).ToListAsync();
+
+            }
+            catch (Exception ex)
+            {
+                //Logger.Default.Error(ex);
+                throw ex;
             }
         }
 

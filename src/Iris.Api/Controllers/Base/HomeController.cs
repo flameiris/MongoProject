@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Iris.FrameCore.MongoDb;
+using Iris.Models.Dto;
 using Iris.Models.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,40 +17,28 @@ namespace Iris.Api.Controllers.Base
     public class HomeController : ControllerBase
     {
         private readonly ILogger _logger;
-
-        private readonly IMongoDbManager<User> _userMongo;
+        private readonly IMapper _mapper;
 
         public HomeController(
-            ILogger<HomeController> logger,
-
-            IMongoDbManager<User> userMongo
+            ILogger<HomeController> logger
+            , IMapper mapper
             )
         {
             _logger = logger;
-
-            _userMongo = userMongo;
+            _mapper = mapper;
         }
 
-        public async Task<string> Index()
+        public string Index()
         {
-
-            _logger.LogInformation("OK");
-
-            await _userMongo.AddAsync(new User
-            {
-                Username = "FlameIris",
-                Password = "123456"
-            });
-
             return "OK";
         }
-
-        public async Task<string> Get()
+        public string A()
         {
+            var user = new User
+            {
 
-            var list1 = await _userMongo.GetAsync(x => x.Username == "FlameIris");
-
-            var list2 = await _userMongo.GetAsync(x => x.Username == "FlameIris2");
+            };
+            var userAddress = _mapper.Map<UserForDetailDto>(user);
             return "OK";
         }
     }
