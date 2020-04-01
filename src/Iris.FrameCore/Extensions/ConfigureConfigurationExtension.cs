@@ -1,9 +1,7 @@
-﻿using Iris.FrameCore.MongoDb;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Iris.Api.Extensions
+namespace Iris.FrameCore.Extensions
 {
     public static class ConfigureConfigurationExtension
     {

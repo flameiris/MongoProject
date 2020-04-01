@@ -8,14 +8,13 @@ using AutoMapper;
 using Iris.FrameCore.Filters;
 using Microsoft.AspNetCore.Mvc.Cors.Internal;
 using Iris.FrameCore.Resolvers;
-using System;
 using CSRedis;
 using System.Globalization;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Redis;
 using Iris.FrameCore.RabbitMQ;
 
-namespace Iris.FrameCore
+namespace Iris.FrameCore.Extensions
 {
     public static class ServiceCollectionExtensions
     {
