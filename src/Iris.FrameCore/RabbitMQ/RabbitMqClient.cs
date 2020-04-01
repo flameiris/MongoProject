@@ -199,7 +199,7 @@ namespace Iris.FrameCore.RabbitMQ
                         }
                         flag = true;
                     }
-                    catch (Exception ex)
+                    catch (Exception e)
                     {
                         sendCount--;
                         Thread.Sleep(100);

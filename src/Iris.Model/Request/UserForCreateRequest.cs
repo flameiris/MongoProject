@@ -1,12 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using AutoMapper;
+using Iris.Models.Model;
 
 namespace Iris.Models.Request
 {
+    [AutoMap(typeof(User))]
     public class UserForCreateRequest
     {
+        /// <summary>
+        /// 用户名
+        /// </summary>
         public string Username { get; set; }
+        /// <summary>
+        /// 密码
+        /// </summary>
         public string Password { get; set; }
     }
 }

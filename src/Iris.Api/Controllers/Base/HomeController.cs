@@ -28,17 +28,15 @@ namespace Iris.Api.Controllers.Base
             _mapper = mapper;
         }
 
+        [HttpGet]
         public string Index()
         {
             return "OK";
         }
-        public string A()
-        {
-            var user = new User
-            {
 
-            };
-            var userAddress = _mapper.Map<UserForDetailDto>(user);
+        [HttpGet]
+        public string Index2(string name = "abc", int age = 18)
+        {
             return "OK";
         }
     }

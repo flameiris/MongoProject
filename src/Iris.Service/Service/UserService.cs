@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Iris.FrameCore.MongoDb;
+using Iris.Models.Common;
 using Iris.Models.Dto;
+using Iris.Models.Enums;
 using Iris.Models.Model;
 using Iris.Models.Request;
 using Iris.Service.IService;
@@ -32,7 +34,7 @@ namespace Iris.Service.Service
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public async Task<bool> Create(UserForCreateRequest request)
+        public async Task<BaseResponse> Create(UserForCreateRequest request)
         {
             User user = new User
             {
@@ -40,7 +42,11 @@ namespace Iris.Service.Service
                 Password = request.Password
             };
 
-            return await _userMongo.AddAsync(user);
+            var flag = await _userMongo.AddAsync(user);
+            if (!flag) return BaseResponse.GetBaseResponse(BusinessStatusType.OperateError);
+            return BaseResponse.GetBaseResponse(BusinessStatusType.OK);
+
+
         }
 
         /// <summary>
@@ -57,33 +63,26 @@ namespace Iris.Service.Service
         /// <summary>
         /// 分页查询
         /// </summary>
-        /// <param name="request"></param>
+        /// <param name="pageModel"></param>
         /// <returns></returns>
-        public async Task<List<UserForListDto>> GetUserListByPage(UserForPageRequest request)
+        public async Task<BaseResponse> GetUserListByPage(PageModel<UserForPageRequest, UserForListDto> pageModel)
         {
-
-            List<UserForListDto> res = new List<UserForListDto>();
-            //排序字段
-            var sort = Builders<User>.Sort.Descending("Createtime");
-
-            //组装查询条件
-            var filterList = new List<FilterDefinition<User>>();
-
-            var filter = filterList.Any() ? Builders<User>.Filter.And(filterList) : null;
+            MongoModel<User> mongoModel = new MongoModel<User>();
+            mongoModel.SortList.Add(mongoModel.Sort.Ascending(pageModel.Sort));
+            mongoModel.FilterList.Add(mongoModel.Filter.Where(x => x.Username == pageModel.Request.Username));
 
             //根据条件查询记录数
-            var count = await _userMongo.CountAsync(filter);
+            var count = await _userMongo.CountAsync(null);
 
             //分页查询
-            var list = (await _userMongo.GetByPageAsync(filter, request.PageIndex, request.PageSize, sort)).ToList();
+            var list = (await _userMongo.GetByPageAsync(mongoModel, pageModel.PageIndex, pageModel.PageSize)).ToList();
             if (!list.Any())
-                return res;
+                return BaseResponse.GetBaseResponse(BusinessStatusType.NoData, "未查询到数据，请稍后重试");
 
-            res.AddRange(list.Select(x => _mapper.Map<UserForListDto>(x)));
+            pageModel.Data = list.Select(x => _mapper.Map<UserForListDto>(x)).ToList();
 
-            return res;
+            return BaseResponse.GetBaseResponse(BusinessStatusType.OK);
         }
-
 
 
     }

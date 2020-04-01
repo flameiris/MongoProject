@@ -8,6 +8,9 @@ namespace Iris.Models.Model
 {
     public class User : IBaseModel
     {
+        private DateTime _createTime = DateTime.Now.ToLocalTime();
+        private DateTime _updateTime = DateTime.Now.ToLocalTime();
+
         [Key]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
         public string Id { get; set; }
@@ -19,8 +22,16 @@ namespace Iris.Models.Model
         public UserBaseinfo Baseinfo { get; set; }
         public List<string> GroupIdList { get; set; }
         public List<string> RoleIdList { get; set; }
-        public DateTime CreateTime { get; set; }
-        public DateTime UpdateTime { get; set; }
+        public DateTime CreateTime
+        {
+            get { return _createTime; }
+            set { _createTime = value.ToLocalTime(); }
+        }
+        public DateTime UpdateTime
+        {
+            get { return _updateTime; }
+            set { _updateTime = value.ToLocalTime(); }
+        }
 
     }
 }

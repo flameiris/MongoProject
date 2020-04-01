@@ -5,8 +5,18 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile></DocumentationFile>
+    <OutputPath></OutputPath>
+    <NoWarn>1701;1702;1591;</NoWarn>
+  </PropertyGroup>
+
   <ItemGroup>
     <Content Remove="NLog.Development.config" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Iris.Api.xml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,6 +36,12 @@
     <ProjectReference Include="..\Iris.FrameCore\Iris.FrameCore.csproj" />
     <ProjectReference Include="..\Iris.Model\Iris.Models.csproj" />
     <ProjectReference Include="..\Iris.Service\Iris.Service.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Iris.Api.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

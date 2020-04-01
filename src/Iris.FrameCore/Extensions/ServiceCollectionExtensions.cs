@@ -13,6 +13,12 @@ using System.Globalization;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Redis;
 using Iris.FrameCore.RabbitMQ;
+using System.IO;
+using System.Reflection;
+using System;
+using Microsoft.OpenApi.Models;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace Iris.FrameCore.Extensions
 {
@@ -41,6 +47,8 @@ namespace Iris.FrameCore.Extensions
             AddHttpClient(services, configuration);
 
             //AddCors(services, configuration);
+
+            AddSwagger(services, Env);
         }
 
         /// <summary>
@@ -56,7 +64,7 @@ namespace Iris.FrameCore.Extensions
                 //添加全局过滤器， order 数字越小的越先执行
 
                 //跨域
-                mvcOptions.Filters.Add(new CorsAuthorizationFilterFactory("AllowSpecificOrigin"));
+                //mvcOptions.Filters.Add(new CorsAuthorizationFilterFactory("AllowSpecificOrigin"));
 
                 //接口参数校验
                 mvcOptions.Filters.Add(typeof(ParameterCheckAttribute));
@@ -67,10 +75,13 @@ namespace Iris.FrameCore.Extensions
                 //是否使用重点路由，不使用
                 mvcOptions.EnableEndpointRouting = false;
             })
-            //返回json格式化
+            //json格式化
             .AddJsonOptions(options =>
             {
-                options.SerializerSettings.ContractResolver = new NullToEmptyStringResolver();
+                //忽略循环引用
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                //序列化时key为驼峰样式
+                options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
             })
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -204,6 +215,32 @@ namespace Iris.FrameCore.Extensions
                         .AllowAnyHeader()
                         .AllowAnyMethod()
                         );
+                });
+            }
+        }
+
+
+        /// <summary>
+        /// 新增Swagger依赖注入
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="Env"></param>
+        private static void AddSwagger(IServiceCollection services, IHostingEnvironment Env)
+        {
+            if (Env.IsDevelopment())
+            {
+                services.AddSwaggerGen(c =>
+                {
+                    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Iris.Api", Version = "v1" });
+
+                    var mvcXmlFile = $"{ Assembly.GetEntryAssembly().GetName().Name }.xml";
+                    var entityXmlFile = $"Iris.Models.xml";
+                    var mvcXmlPath = Path.Combine(AppContext.BaseDirectory, mvcXmlFile);
+                    var entityXmlPath = Path.Combine(AppContext.BaseDirectory, entityXmlFile);
+                    c.IncludeXmlComments(mvcXmlPath, true);
+                    c.IncludeXmlComments(entityXmlPath, true);
+
+
                 });
             }
         }

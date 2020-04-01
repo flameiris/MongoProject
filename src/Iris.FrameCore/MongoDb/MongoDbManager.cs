@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,6 @@ namespace Iris.FrameCore.MongoDb
     public class MongoDbManager<T> : IMongoDbManager<T> where T : class, IBaseModel
     {
         private readonly ILogger _logger;
-
         protected MongoDbContext _context;
         protected readonly IMongoCollection<T> _collection;
 
@@ -25,7 +25,6 @@ namespace Iris.FrameCore.MongoDb
         public MongoDbManager(IOptions<MongodbOptions> settings, ILogger<MongoDbManager<T>> logger)
         {
             _logger = logger;
-
             _context = new MongoDbContext(settings);
             _collection = _context.GetCollection<T>();
         }
@@ -46,7 +45,7 @@ namespace Iris.FrameCore.MongoDb
             }
             catch (Exception e)
             {
-                _logger.LogError("Mongodb 异步添加一条数据错误", e);
+                _logger.LogError($"Mongodb 异步添加一条数据错误，数据为： {JsonConvert.SerializeObject(entity)}", e);
                 return false;
             }
         }
@@ -65,7 +64,7 @@ namespace Iris.FrameCore.MongoDb
             }
             catch (Exception e)
             {
-                _logger.LogError("Mongodb 异步添加一条数据并返回ID错误", e);
+                _logger.LogError($"Mongodb 异步添加一条数据并返回ID错误，数据为： {JsonConvert.SerializeObject(entity)}", e);
                 return null;
             }
         }
@@ -84,7 +83,7 @@ namespace Iris.FrameCore.MongoDb
             }
             catch (Exception e)
             {
-                _logger.LogError("Mongodb 异步添加多条数据错误", e);
+                _logger.LogError($"Mongodb 异步添加多条数据错误，数据为： {JsonConvert.SerializeObject(entitys)}", e);
                 return false;
             }
 
@@ -104,7 +103,7 @@ namespace Iris.FrameCore.MongoDb
             }
             catch (Exception e)
             {
-                _logger.LogError("Mongodb 异步根据条件获取总数错误", e);
+                _logger.LogError($"Mongodb 异步根据条件获取总数错误，参数为： {JsonConvert.SerializeObject(filter)}", e);
                 return 0;
             }
         }
@@ -206,10 +205,15 @@ namespace Iris.FrameCore.MongoDb
         /// <param name="pageSize"></param>
         /// <param name="sort"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<T>> GetByPageAsync(FilterDefinition<T> filter, int pageIndex, int pageSize, SortDefinition<T> sort = null)
+        public async Task<IEnumerable<T>> GetByPageAsync(MongoModel<T> mongo, int pageIndex, int pageSize)
         {
             try
             {
+                var filter = mongo.FilterList.Any() ? mongo.Filter.And(mongo.FilterList) : null;
+                var sort = mongo.SortList.Any() ? mongo.Sort.Combine(mongo.SortList) : null;
+                var projection = mongo.ProjectionList.Any() ? mongo.Projection.Combine(mongo.ProjectionList) : null;
+
+
                 //没有查询条件
                 if (filter == null)
                 {
@@ -224,10 +228,10 @@ namespace Iris.FrameCore.MongoDb
                 return await _collection.Find(filter).Sort(sort).Skip((pageIndex - 1) * pageSize).Limit(pageSize).ToListAsync();
 
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                //Logger.Default.Error(ex);
-                throw ex;
+                _logger.LogError("Mongodb 分页查询数据列表错误", e);
+                return null;
             }
         }
 

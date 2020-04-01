@@ -6,11 +6,52 @@ using System.Text;
 
 namespace Iris.Models.Common
 {
+    //public class BaseResponse<T>
+    //    where T : new()
+    //{
+    //    public int Code { get; set; }
+    //    public string Message { get; set; }
+    //    public T Response { get; set; }
+
+    //    public BaseResponse(BusinessStatusType code) : this(code, EnumberHelper.GetEnumDescription(code))
+    //    {
+
+    //    }
+
+    //    public BaseResponse(BusinessStatusType code, string message) : this(code, message, new T())
+    //    {
+    //    }
+
+    //    public BaseResponse(BusinessStatusType code, string message, T response)
+    //    {
+    //        Code = (int)code;
+    //        Message = message;
+    //        Response = response;
+    //    }
+
+
+
+    //    public static BaseResponse<T> GetBaseResponse(BusinessStatusType code)
+    //    {
+    //        return new BaseResponse<T>(code);
+    //    }
+
+    //    public static BaseResponse<T> GetBaseResponse(BusinessStatusType code, string message)
+    //    {
+    //        return new BaseResponse<T>(code, message);
+    //    }
+
+    //    public static BaseResponse<T> GetBaseResponse(BusinessStatusType code, string message, T response)
+    //    {
+    //        return new BaseResponse<T>(code, message, response);
+    //    }
+    //}
+
     public class BaseResponse
     {
         public int Code { get; set; }
         public string Message { get; set; }
-        public object Data { get; set; }
+        public object Response { get; set; }
 
         public BaseResponse(BusinessStatusType code) : this(code, EnumberHelper.GetEnumDescription(code))
         {
@@ -21,11 +62,11 @@ namespace Iris.Models.Common
         {
         }
 
-        public BaseResponse(BusinessStatusType code, string message, object data)
+        public BaseResponse(BusinessStatusType code, string message, object response)
         {
             Code = (int)code;
             Message = message;
-            Data = data;
+            Response = response;
         }
 
 
@@ -40,9 +81,9 @@ namespace Iris.Models.Common
             return new BaseResponse(code, message);
         }
 
-        public static BaseResponse GetBaseResponse(BusinessStatusType code, string message, object data)
+        public static BaseResponse GetBaseResponse(BusinessStatusType code, string message, object response)
         {
-            return new BaseResponse(code, message, data);
+            return new BaseResponse(code, message, response);
         }
     }
 }

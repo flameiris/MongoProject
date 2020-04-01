@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Iris.Models</name>
+    </assembly>
+    <members>
+        <member name="T:Iris.Models.Common.PageModel`2">
+            <summary>
+            通用分页信息类
+            </summary>
+        </member>
+        <member name="P:Iris.Models.Common.PageModel`2.PageIndex">
+            <summary>
+            当前页标
+            </summary>
+        </member>
+        <member name="P:Iris.Models.Common.PageModel`2.PageSize">
+            <summary>
+            每页大小
+            </summary>
+        </member>
+        <member name="P:Iris.Models.Common.PageModel`2.PageCount">
+            <summary>
+            总页数
+            </summary>
+        </member>
+        <member name="P:Iris.Models.Common.PageModel`2.DataCount">
+            <summary>
+            数据总数
+            </summary>
+        </member>
+        <member name="P:Iris.Models.Common.PageModel`2.Sort">
+            <summary>
+            排序字段
+            </summary>
+        </member>
+        <member name="P:Iris.Models.Common.PageModel`2.Request">
+            <summary>
+            请求数据
+            </summary>
+        </member>
+        <member name="P:Iris.Models.Common.PageModel`2.Data">
+            <summary>
+            返回数据
+            </summary>
+        </member>
+        <member name="T:Iris.Models.Dto.UserForListDto">
+            <summary>
+            返回对象
+            </summary>
+        </member>
+        <member name="F:Iris.Models.Enums.BusinessStatusType.OK">
+            <summary>
+            成功
+            </summary>
+        </member>
+        <member name="F:Iris.Models.Enums.BusinessStatusType.ParameterUnDesirable">
+            <summary>
+            参数不符合期望
+            </summary>
+        </member>
+        <member name="F:Iris.Models.Enums.BusinessStatusType.NoData">
+            <summary>
+            未查询到数据，请稍后重试
+            </summary>
+        </member>
+        <member name="T:Iris.Models.Model.IBaseModel">
+            <summary>
+            所有数据表实体类都必须实现此接口
+            </summary>
+        </member>
+        <member name="T:Iris.Models.Request.UserForPageRequest">
+            <summary>
+            请求类
+            </summary>
+        </member>
+    </members>
+</doc>

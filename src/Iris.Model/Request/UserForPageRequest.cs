@@ -5,7 +5,11 @@ using System.Text;
 
 namespace Iris.Models.Request
 {
-    public class UserForPageRequest : ListBase
+    /// <summary>
+    /// 请求类
+    /// </summary>
+    public class UserForPageRequest
     {
+        public string Username { get; set; }
     }
 }
