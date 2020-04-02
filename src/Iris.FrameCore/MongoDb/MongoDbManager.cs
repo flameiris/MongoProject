@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Iris.FrameCore.MongoDb
@@ -119,8 +118,7 @@ namespace Iris.FrameCore.MongoDb
         {
             try
             {
-                var task = await _collection.FindAsync(@where);
-                return task.ToList().FirstOrDefault();
+                return (await _collection.FindAsync(@where)).FirstOrDefault();
             }
             catch (Exception e)
             {
@@ -137,8 +135,7 @@ namespace Iris.FrameCore.MongoDb
         {
             try
             {
-                var task = await _collection.FindAsync(@where);
-                return task.ToList();
+                return (await _collection.FindAsync(@where)).ToList();
             }
             catch (Exception e)
             {
@@ -154,41 +151,12 @@ namespace Iris.FrameCore.MongoDb
         /// <param name="field">查询显示字段</param>
         /// <param name="sort">排序字段</param>
         /// <returns></returns>
-        public async Task<IEnumerable<T>> GetAsync(FilterDefinition<T> filter, string[] field = null, SortDefinition<T> sort = null)
+        public async Task<IEnumerable<T>> GetAsync(MongoModel<T> mongo)
         {
             try
             {
-                //不指定查询字段
-                if (field == null || field.Length == 0)
-                {
-                    if (filter == null)
-                    {
-                        if (sort == null) return await _collection.Find(_ => true).ToListAsync();
-                        //进行排序
-                        return await _collection.Find(_ => true).Sort(sort).ToListAsync();
-                    }
-
-                    if (sort == null) return await _collection.Find(filter).ToListAsync();
-                    //进行排序
-                    return await _collection.Find(filter).Sort(sort).ToListAsync();
-                }
-
-                #region 指定查询字段
-                //指定查询字段
-                var fieldList = new List<ProjectionDefinition<T>>();
-
-                for (int i = 0; i < field.Length; i++)
-                {
-                    fieldList.Add(Builders<T>.Projection.Include(field[i].ToString()));
-                }
-                var projection = Builders<T>.Projection.Combine(fieldList);
-                fieldList?.Clear();
-
-                if (sort == null) return await _collection.Find(filter).Project<T>(projection).ToListAsync();
-                //排序查询
-                return await _collection.Find(filter).Sort(sort).Project<T>(projection).ToListAsync();
-                #endregion
-
+                var _ = GetFluent(mongo);
+                return await _.ToListAsync();
             }
             catch (Exception e)
             {
@@ -209,23 +177,8 @@ namespace Iris.FrameCore.MongoDb
         {
             try
             {
-                var filter = mongo.FilterList.Any() ? mongo.Filter.And(mongo.FilterList) : null;
-                var sort = mongo.SortList.Any() ? mongo.Sort.Combine(mongo.SortList) : null;
-                var projection = mongo.ProjectionList.Any() ? mongo.Projection.Combine(mongo.ProjectionList) : null;
-
-
-                //没有查询条件
-                if (filter == null)
-                {
-                    if (sort == null)
-                        return await _collection.Find(_ => true).Skip((pageIndex - 1) * pageSize).Limit(pageSize).ToListAsync();
-                    //排序
-                    return await _collection.Find(_ => true).Sort(sort).Skip((pageIndex - 1) * pageSize).Limit(pageSize).ToListAsync();
-                }
-
-                if (sort == null) return await _collection.Find(filter).Skip((pageIndex - 1) * pageSize).Limit(pageSize).ToListAsync();
-                //排序
-                return await _collection.Find(filter).Sort(sort).Skip((pageIndex - 1) * pageSize).Limit(pageSize).ToListAsync();
+                var _ = GetFluent(mongo);
+                return await _.Skip((pageIndex - 1) * pageSize).Limit(pageSize).ToListAsync();
 
             }
             catch (Exception e)
@@ -233,6 +186,32 @@ namespace Iris.FrameCore.MongoDb
                 _logger.LogError("Mongodb 分页查询数据列表错误", e);
                 return null;
             }
+        }
+
+        /// <summary>
+        /// 获取查询相关 filter、sort、projection 等公共对象
+        /// </summary>
+        /// <param name="mongo"></param>
+        /// <returns></returns>
+        private IFindFluent<T, T> GetFluent(MongoModel<T> mongo)
+        {
+            var filter = mongo.FilterList.Any() ? mongo.Filter.And(mongo.FilterList) : null;
+            var sort = mongo.SortList.Any() ? mongo.Sort.Combine(mongo.SortList) : null;
+            var projection = mongo.ProjectionList.Any() ? mongo.Projection.Combine(mongo.ProjectionList) : null;
+
+            IFindFluent<T, T> _ = null;
+            if (filter != null)
+                _ = _collection.Find(filter);
+            else
+                _ = _collection.Find(x => true);
+
+            if (sort != null)
+                _ = _.Sort(sort);
+
+            if (projection != null)
+                _ = _.Project<T>(projection);
+
+            return _;
         }
 
     }

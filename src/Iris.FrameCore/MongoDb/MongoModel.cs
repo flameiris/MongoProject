@@ -1,6 +1,8 @@
 ﻿using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace Iris.FrameCore.MongoDb
@@ -20,5 +22,35 @@ namespace Iris.FrameCore.MongoDb
         public List<ProjectionDefinition<T>> ProjectionList { get; } = new List<ProjectionDefinition<T>>();
         public List<SortDefinition<T>> SortList { get; } = new List<SortDefinition<T>>();
         public List<UpdateDefinition<T>> UpdateList { get; } = new List<UpdateDefinition<T>>();
+
+
+        public void Ascending(FieldDefinition<T> field)
+        {
+            SortList.Add(Sort.Ascending(field));
+        }
+        public void Descending(FieldDefinition<T> field)
+        {
+            SortList.Add(Sort.Descending(field));
+        }
+
+        public void Where(Expression<Func<T, bool>> expression)
+        {
+            FilterList.Add(Filter.Where(expression));
+        }
+
+        public void Or(Expression<Func<T, bool>> expression)
+        {
+            FilterList.Add(Filter.Or(expression));
+        }
+
+        public void Include(params string[] fields)
+        {
+            ProjectionList.AddRange(fields.ToList().Select(x => Projection.Include(x)));
+        }
+
+        public void Exclude(params string[] fields)
+        {
+            ProjectionList.AddRange(fields.ToList().Select(x => Projection.Exclude(x)));
+        }
     }
 }

@@ -8,7 +8,7 @@ namespace Iris.Service.IService
     public interface IUserService
     {
         Task<BaseResponse> Create(UserForCreateRequest request);
-
+        Task<BaseResponse> GetUserDetail(string userId);
         Task<BaseResponse> GetUserListByPage(PageModel<UserForPageRequest, UserForListDto> pageModel);
     }
 }

@@ -26,7 +26,7 @@ namespace Iris.Models.Common
         /// <summary>
         /// 数据总数
         /// </summary>
-        public int DataCount { get; set; } = 0;
+        public long DataCount { get; set; } = 0;
         /// <summary>
         /// 排序字段
         /// </summary>

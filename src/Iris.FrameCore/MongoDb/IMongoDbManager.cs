@@ -18,8 +18,10 @@ namespace Iris.FrameCore.MongoDb
         Task<bool> AddAsync(T entity);
 
         Task<long> CountAsync(FilterDefinition<T> filter = null);
+
         Task<T> GetFirstOrDefaultAsync(Expression<Func<T, bool>> @where = null);
         Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> @where = null);
+        Task<IEnumerable<T>> GetAsync(MongoModel<T> mongo);
         Task<IEnumerable<T>> GetByPageAsync(MongoModel<T> mongo, int pageIndex, int pageSize);
     }
 }

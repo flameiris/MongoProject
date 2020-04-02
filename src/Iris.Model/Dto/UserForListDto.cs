@@ -16,5 +16,15 @@ namespace Iris.Models.Dto
         public string Username { get; set; }
         public string CreateTime { get; set; }
         public string UpdateTime { get; set; }
+
+        public static UserForListDto Map(IMapper _mapper, User user)
+        {
+            var model = _mapper.Map<UserForListDto>(user);
+
+            //更多自定义赋值TODO
+            
+
+            return model;
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Iris.FrameCore.MongoDb;
+using Iris.Infrastructure.ExtensionMethods;
 using Iris.Models.Common;
 using Iris.Models.Dto;
 using Iris.Models.Enums;
@@ -54,10 +55,13 @@ namespace Iris.Service.Service
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<UserForDetailDto> GetUserDetail(string id)
+        public async Task<BaseResponse> GetUserDetail(string userId)
         {
-            var user = await _userMongo.GetFirstOrDefaultAsync(x => x.Id == id && x.Version == 1.0);
-            return _mapper.Map<UserForDetailDto>(user);
+            var user = await _userMongo.GetFirstOrDefaultAsync(x => x.Id == userId && x.Version == 1.0);
+
+
+            var model = UserForDetailDto.MapTo(_mapper, user);
+            return BaseResponse.GetBaseResponse(BusinessStatusType.OK, null, model);
         }
 
         /// <summary>
@@ -67,21 +71,27 @@ namespace Iris.Service.Service
         /// <returns></returns>
         public async Task<BaseResponse> GetUserListByPage(PageModel<UserForPageRequest, UserForListDto> pageModel)
         {
-            MongoModel<User> mongoModel = new MongoModel<User>();
-            mongoModel.SortList.Add(mongoModel.Sort.Ascending(pageModel.Sort));
-            mongoModel.FilterList.Add(mongoModel.Filter.Where(x => x.Username == pageModel.Request.Username));
+            var r = pageModel.Request;
+            MongoModel<User> mongo = new MongoModel<User>();
+            mongo.Ascending(pageModel.Sort);
+            if (r.Username.EnabledStr()) mongo.Where(x => x.Username == r.Username || x.Username == "flame2");
+            if (r.StartTime.EnabledDateTime() && r.EndTime.EnabledDateTime())
+                mongo.Or(x => x.CreateTime > r.StartTime && x.CreateTime < r.EndTime);
+            mongo.Include("Username", "Password");
+
 
             //根据条件查询记录数
-            var count = await _userMongo.CountAsync(null);
+            var count = await _userMongo.CountAsync(mongo.Filter.And(mongo.FilterList));
 
             //分页查询
-            var list = (await _userMongo.GetByPageAsync(mongoModel, pageModel.PageIndex, pageModel.PageSize)).ToList();
+            var list = (await _userMongo.GetByPageAsync(mongo, pageModel.PageIndex, pageModel.PageSize)).ToList();
             if (!list.Any())
                 return BaseResponse.GetBaseResponse(BusinessStatusType.NoData, "未查询到数据，请稍后重试");
 
-            pageModel.Data = list.Select(x => _mapper.Map<UserForListDto>(x)).ToList();
+            pageModel.Data = list.Select(x => UserForListDto.Map(_mapper, x)).ToList();
+            pageModel.DataCount = count;
 
-            return BaseResponse.GetBaseResponse(BusinessStatusType.OK);
+            return BaseResponse.GetBaseResponse(BusinessStatusType.OK, null, pageModel);
         }
 
 

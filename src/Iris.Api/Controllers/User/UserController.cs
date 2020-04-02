@@ -44,6 +44,17 @@ namespace Iris.Api.Controllers
         }
 
         /// <summary>
+        /// 查询
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<BaseResponse> GetUserDetail(string userId)
+        {
+            return await _userService.GetUserDetail(userId);
+        }
+
+        /// <summary>
         /// 分页查询
         /// </summary>
         /// <param name="pageModel">分页对象</param>
@@ -52,7 +63,6 @@ namespace Iris.Api.Controllers
         public async Task<BaseResponse> GetUserListByPage(PageModel<UserForPageRequest, UserForListDto> pageModel)
         {
             var res = await _userService.GetUserListByPage(pageModel);
-            res.Response = pageModel;
             return res;
         }
     }
