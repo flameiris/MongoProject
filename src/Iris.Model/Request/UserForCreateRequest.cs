@@ -3,7 +3,7 @@ using Iris.Models.Model;
 
 namespace Iris.Models.Request
 {
-    [AutoMap(typeof(User))]
+   
     public class UserForCreateRequest
     {
         /// <summary>
@@ -14,5 +14,9 @@ namespace Iris.Models.Request
         /// 密码
         /// </summary>
         public string Password { get; set; }
+        /// <summary>
+        /// 昵称
+        /// </summary>
+        public string Nickname { get; set; }
     }
 }

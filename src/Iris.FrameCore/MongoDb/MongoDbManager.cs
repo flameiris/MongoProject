@@ -109,6 +109,23 @@ namespace Iris.FrameCore.MongoDb
 
 
 
+        //public async Task<T> Aggregate()
+        //{
+        //    try
+        //    {
+        //        PipelineDefinition<User, UserBaseinfo>.Create();
+
+        //        AggregateLookupOptions<User, UserBaseinfo> aggregateLookupOptions = new AggregateLookupOptions<User, UserBaseinfo>();
+        //        _collection.Aggregate<T>(aggregateLookupOptions);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        _logger.LogError("Mongodb 依据条件查询数据错误", e);
+        //        return null;
+        //    }
+        //}
+
+
         /// <summary>
         /// 依据条件查询数据
         /// </summary>

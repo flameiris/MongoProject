@@ -40,7 +40,11 @@ namespace Iris.Service.Service
             User user = new User
             {
                 Username = request.Username,
-                Password = request.Password
+                Password = request.Password,
+                Baseinfo = new UserBaseinfo
+                {
+                    Nickname = request.Nickname
+                }
             };
 
             var flag = await _userMongo.AddAsync(user);
@@ -58,6 +62,8 @@ namespace Iris.Service.Service
         public async Task<BaseResponse> GetUserDetail(string userId)
         {
             var user = await _userMongo.GetFirstOrDefaultAsync(x => x.Id == userId && x.Version == 1.0);
+            if (user == null) return BaseResponse.GetBaseResponse(BusinessStatusType.NoData);
+
 
 
             var model = UserForDetailDto.MapTo(_mapper, user);
@@ -88,7 +94,7 @@ namespace Iris.Service.Service
             if (!list.Any())
                 return BaseResponse.GetBaseResponse(BusinessStatusType.NoData, "未查询到数据，请稍后重试");
 
-            pageModel.Data = list.Select(x => UserForListDto.Map(_mapper, x)).ToList();
+            pageModel.Data = list.Select(x => UserForListDto.MapTo(_mapper, x)).ToList();
             pageModel.DataCount = count;
 
             return BaseResponse.GetBaseResponse(BusinessStatusType.OK, null, pageModel);

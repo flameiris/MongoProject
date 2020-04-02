@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,6 +7,7 @@ namespace Iris.Models.Model
 {
     public class UserBaseinfo
     {
+        [BsonElement("Nickname")]
         public string Nickname { get; set; }
         public string ProfilePicture { get; set; }
         public string Mobile { get; set; }

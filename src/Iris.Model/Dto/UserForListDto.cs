@@ -10,19 +10,19 @@ namespace Iris.Models.Dto
     /// 返回对象
     /// </summary>
 
-    [AutoMap(typeof(User))]
+    //[AutoMap(typeof(User))]
     public class UserForListDto
     {
         public string Username { get; set; }
         public string CreateTime { get; set; }
         public string UpdateTime { get; set; }
 
-        public static UserForListDto Map(IMapper _mapper, User user)
+        public static UserForListDto MapTo(IMapper _mapper, User user)
         {
             var model = _mapper.Map<UserForListDto>(user);
 
             //更多自定义赋值TODO
-            
+
 
             return model;
         }

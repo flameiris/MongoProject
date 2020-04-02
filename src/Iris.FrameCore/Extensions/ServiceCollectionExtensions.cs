@@ -19,6 +19,7 @@ using System;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
+using Iris.FrameCore.AutoMapper;
 
 namespace Iris.FrameCore.Extensions
 {
@@ -154,10 +155,11 @@ namespace Iris.FrameCore.Extensions
         {
             var configuration = new MapperConfiguration(cfg =>
             {
-                cfg.AddMaps("Iris.Models");
+                //cfg.AddMaps("Iris.Models");
 
                 //cfg.CreateMap(typeof(User), typeof(UserForDetailDto));
 
+                cfg.AddProfile(new AutoMapProfile());
             });
             configuration.AssertConfigurationIsValid();
             var mapper = configuration.CreateMapper();
