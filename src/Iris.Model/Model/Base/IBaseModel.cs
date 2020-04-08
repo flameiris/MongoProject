@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Iris.Models.Model
+﻿namespace Iris.Models.Model
 {
     /// <summary>
     /// 所有数据表实体类都必须实现此接口

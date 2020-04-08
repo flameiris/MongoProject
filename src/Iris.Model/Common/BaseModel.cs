@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Iris.Models.Common
+﻿namespace Iris.Models.Common
 {
     public class ListBase
     {

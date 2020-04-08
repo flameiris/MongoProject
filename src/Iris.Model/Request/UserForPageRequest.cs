@@ -1,7 +1,4 @@
-﻿using Iris.Models.Common;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 
 namespace Iris.Models.Request
 {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Iris.FrameCore.RabbitMQ
+﻿namespace Iris.FrameCore.RabbitMQ
 {
     public class RabbitMqOptions
     {

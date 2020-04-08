@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Iris.FrameCore.MongoDb;
+﻿using Iris.FrameCore.MongoDb;
 using Iris.Models.Common;
 using Iris.Models.Dto;
-using Iris.Models.Model;
+using Iris.Models.Model.UserPart;
 using Iris.Models.Request;
-using Iris.Service.IService;
-using Microsoft.AspNetCore.Http;
+using Iris.Service.IService.UserPart;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
-namespace Iris.Api.Controllers
+namespace Iris.Api.Controllers.UserPart
 {
     /// <summary>
     /// 用户控制器

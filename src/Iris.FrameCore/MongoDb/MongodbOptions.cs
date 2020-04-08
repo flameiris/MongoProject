@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Iris.FrameCore.MongoDb
+﻿namespace Iris.FrameCore.MongoDb
 {
     public class MongodbOptions
     {

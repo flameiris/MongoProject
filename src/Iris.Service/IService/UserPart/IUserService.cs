@@ -3,7 +3,7 @@ using Iris.Models.Dto;
 using Iris.Models.Request;
 using System.Threading.Tasks;
 
-namespace Iris.Service.IService
+namespace Iris.Service.IService.UserPart
 {
     public interface IUserService
     {

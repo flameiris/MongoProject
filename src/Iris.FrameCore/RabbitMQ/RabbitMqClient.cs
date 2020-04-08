@@ -14,21 +14,24 @@ namespace Iris.FrameCore.RabbitMQ
 {
     public class RabbitMqClient : IDisposable
     {
-
+        private readonly ILogger _logger;
         private readonly IConnection _conn;
-        private static readonly object _lockObj = new object();
         private static readonly ConcurrentDictionary<string, IModel> ModelDic =
             new ConcurrentDictionary<string, IModel>();
         #region 消息无法消费时使用的专用队列
-        static int tryTimes = 3;
-        static string ExchangeName = "vmeng_exc";
-        static string QueueName = "vmeng_UnConsumer";
-        static string RouteKey = "bind_UnConsumer";
-        static string ExchangeType = "direct";
+        //static int tryTimes = 3;
+        static readonly string ExchangeName = "vmeng_exc";
+        static readonly string QueueName = "vmeng_UnConsumer";
+        static readonly string RouteKey = "bind_UnConsumer";
+        static readonly string ExchangeType = "direct";
+
         #endregion
 
-        public RabbitMqClient(IOptions<RabbitMqOptions> settings)
+        public RabbitMqClient(
+            ILogger<RabbitMqClient> logger,
+            IOptions<RabbitMqOptions> settings)
         {
+            _logger = logger;
             var factory = new ConnectionFactory
             {
                 VirtualHost = "my_vhost",
@@ -201,6 +204,7 @@ namespace Iris.FrameCore.RabbitMQ
                     }
                     catch (Exception e)
                     {
+                        _logger.LogError($"发布消息至对列确认失败。对列内容：{JsonConvert.SerializeObject(messageObj)}", e);
                         sendCount--;
                         Thread.Sleep(100);
                     }

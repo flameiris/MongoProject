@@ -4,17 +4,13 @@ using Iris.Infrastructure.ExtensionMethods;
 using Iris.Models.Common;
 using Iris.Models.Dto;
 using Iris.Models.Enums;
-using Iris.Models.Model;
+using Iris.Models.Model.UserPart;
 using Iris.Models.Request;
-using Iris.Service.IService;
 using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace Iris.Service.Service
+namespace Iris.Service.Service.UserPart
 {
     public class UserService : IUserService
     {
@@ -83,7 +79,7 @@ namespace Iris.Service.Service
             if (r.Username.EnabledStr()) mongo.Where(x => x.Username == r.Username || x.Username == "flame2");
             if (r.StartTime.EnabledDateTime() && r.EndTime.EnabledDateTime())
                 mongo.Or(x => x.CreateTime > r.StartTime && x.CreateTime < r.EndTime);
-            mongo.Include("Username", "Password");
+            mongo.Exclude("Baseinfo.DeliveryAddressList");
 
 
             //根据条件查询记录数
@@ -94,12 +90,14 @@ namespace Iris.Service.Service
             if (!list.Any())
                 return BaseResponse.GetBaseResponse(BusinessStatusType.NoData, "未查询到数据，请稍后重试");
 
-            pageModel.Data = list.Select(x => UserForListDto.MapTo(_mapper, x)).ToList();
+            var dtoList = list.Select(x => UserForListDto.MapTo(_mapper, x)).ToList();
+
+
+
+            pageModel.Data = dtoList;
             pageModel.DataCount = count;
 
             return BaseResponse.GetBaseResponse(BusinessStatusType.OK, null, pageModel);
         }
-
-
     }
 }

@@ -1,8 +1,5 @@
 ﻿using Iris.Infrastructure.Helpers;
 using Iris.Models.Enums;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Iris.Models.Common
 {

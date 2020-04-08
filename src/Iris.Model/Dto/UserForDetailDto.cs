@@ -1,8 +1,5 @@
 ﻿using AutoMapper;
-using Iris.Models.Model;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Iris.Models.Model.UserPart;
 
 namespace Iris.Models.Dto
 {
@@ -28,8 +25,6 @@ namespace Iris.Models.Dto
             m.Nickname = _b.Nickname;
             m.ProfilePicture = _b.ProfilePicture;
             m.Mobile = _b.Mobile;
-            m.IdCard = _b.IdCard;
-            m.IdCardPicture = _b.IdCardPicture;
             m.Email = _b.Email;
             m.UserType = _b.UserType;
 

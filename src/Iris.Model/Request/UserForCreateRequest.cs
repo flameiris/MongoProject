@@ -1,9 +1,6 @@
-﻿using AutoMapper;
-using Iris.Models.Model;
-
-namespace Iris.Models.Request
+﻿namespace Iris.Models.Request
 {
-   
+
     public class UserForCreateRequest
     {
         /// <summary>

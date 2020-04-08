@@ -1,8 +1,5 @@
 ﻿using AutoMapper;
-using Iris.FrameCore;
 using Iris.FrameCore.Extensions;
-using Iris.Service.IService;
-using Iris.Service.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;

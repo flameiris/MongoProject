@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace Iris.Models.Model
+namespace Iris.Models.Model.UserPart
 {
     public class RoleAuth
     {

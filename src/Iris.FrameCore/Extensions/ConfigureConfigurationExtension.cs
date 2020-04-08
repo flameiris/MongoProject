@@ -13,7 +13,7 @@ namespace Iris.FrameCore.Extensions
         /// <returns></returns>
         public static IServiceCollection AddConfigure(this IServiceCollection services, IConfiguration configuration)
         {
-          
+
             return services;
         }
 

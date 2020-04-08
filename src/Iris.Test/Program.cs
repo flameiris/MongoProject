@@ -1,4 +1,5 @@
 ﻿using Iris.Models.Model;
+using Iris.Models.Model.UserPart;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
@@ -30,19 +31,11 @@ namespace Iris.Test
             Console.WriteLine(users.CountDocuments());
 
 
-            var date = Convert.ToDateTime("2017-02-31");
 
 
-            var doc = new BsonDocument
-            {
-                { "a", 1 },
-                { "b", new BsonArray
-                       {
-                            new BsonDocument("c", 1)
-                       }}
-            };
+            //var pipeline = PipelineDefinition<User, User>.Create(doc);
 
-            Console.WriteLine(doc);
+            //var list = _co.Aggregate(pipeline).ToList();
 
             Console.ReadKey();
 

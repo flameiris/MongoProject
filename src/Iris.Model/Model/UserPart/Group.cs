@@ -1,10 +1,8 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
-namespace Iris.Models.Model
+namespace Iris.Models.Model.UserPart
 {
     public class Group : IBaseModel
     {

@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Iris.Models.Model
+﻿namespace Iris.Models.Model.UserPart
 {
-    public class UserDeliveryAddress
+    public class UserAddress
     {
-        public string Name { get; set; }
-        public string Mobile { get; set; }
         public string ProvinceCode { get; set; }
         public string CityCode { get; set; }
         public string AreaCode { get; set; }
