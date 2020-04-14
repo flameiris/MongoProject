@@ -6,6 +6,7 @@ using Iris.Models.Dto;
 using Iris.Models.Enums;
 using Iris.Models.Model.UserPart;
 using Iris.Models.Request;
+using Iris.Service.IService.UserPart;
 using MongoDB.Driver;
 using System.Linq;
 using System.Threading.Tasks;

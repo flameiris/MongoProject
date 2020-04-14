@@ -1,4 +1,4 @@
-﻿using Iris.Models.Model;
+﻿using Iris.Models;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;

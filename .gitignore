@@ -2,17 +2,23 @@
 # 此 .gitignore 文件已由 Microsoft(R) Visual Studio 自动创建。
 ################################################################################
 
+/.vs
+/.vscode
 /src/.vs
 /src/.vscode
-/src/Iris.Service/obj
-/src/Iris.Service/bin
-/src/Iris.Model/obj
-/src/Iris.Model/bin
-/src/Iris.FrameCore/obj
-/src/Iris.FrameCore/bin
-/src/Iris.Api/obj
-/src/Iris.Api/bin
-/src/Iris.Infrastructure/bin
-/src/Iris.Infrastructure/obj
-/src/Iris.Test/bin
-/src/Iris.Test/obj
+/src/IrisProject/Iris.Service/obj
+/src/IrisProject/Iris.Service/bin
+/src/IrisProject/Iris.Model/obj
+/src/IrisProject/Iris.Model/bin
+/src/IrisProject/Iris.FrameCore/obj
+/src/IrisProject/Iris.FrameCore/bin
+/src/IrisProject/Iris.Api/obj
+/src/IrisProject/Iris.Api/bin
+/src/IrisProject/Iris.Infrastructure/bin
+/src/IrisProject/Iris.Infrastructure/obj
+/src/IrisProject/Iris.Test/bin
+/src/IrisProject/Iris.Test/obj
+/src/IrisGateway/Iris.Ocelot/bin
+/src/IrisGateway/Iris.Ocelot/obj
+/src/IrisGateway/Iris.Gateway/bin
+/src/IrisGateway/Iris.Gateway/obj

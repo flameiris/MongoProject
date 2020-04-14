@@ -1,4 +1,4 @@
-﻿using Iris.Models.Model;
+﻿using Iris.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
