@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Iris.FrameCore.Extensions;
+using Iris.Service.IService.UserPart;
+using Iris.Service.Service.UserPart;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -10,7 +12,7 @@ namespace Iris.Api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration, IHostingEnvironment env)
+        public Startup(IHostingEnvironment env)
         {
             Env = env;
 
