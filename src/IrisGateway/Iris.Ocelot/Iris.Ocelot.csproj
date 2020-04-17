@@ -9,11 +9,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\IrisProject\Iris.FrameCore\Iris.FrameCore.csproj" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Extensions\" />
+    <ProjectReference Include="..\..\Iris.MongoDB\Iris.MongoDB.csproj" />
   </ItemGroup>
   
 </Project>
