@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -26,6 +27,7 @@ namespace Iris.UserApi.Controllers.Base
             return "OK";
         }
 
+        [Authorize]
         [HttpGet]
         public string Index2(string name = "abc", int age = 18)
         {

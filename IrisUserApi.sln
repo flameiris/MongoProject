@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29318.209
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Iris.UserApi", "src\IrisUserApi\Iris.Api\Iris.UserApi.csproj", "{46D157B9-046F-465E-A8C0-4C55E2E482A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Iris.UserApi", "src\IrisUserApi\Iris.UserApi\Iris.UserApi.csproj", "{46D157B9-046F-465E-A8C0-4C55E2E482A8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Iris.FrameCore", "src\IrisUserApi\Iris.FrameCore\Iris.FrameCore.csproj", "{C43C1DB6-A767-48BC-ADD1-45645D89BEE9}"
 EndProject

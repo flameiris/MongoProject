@@ -1,8 +1,7 @@
-﻿using AutoMapper;
+﻿using Iris.Service.IService.UserPart;
+using Iris.Service.Service.UserPart;
 using Iris.UserApi.Extensions;
 using Iris.UserApi.Extensions.Middleware;
-using Iris.Service.IService.UserPart;
-using Iris.Service.Service.UserPart;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -33,11 +32,29 @@ namespace Iris.UserApi
             //添加基础组件依赖注入
             services.AddApiServiceCollection(Configuration, Env);
 
-
             //添加配置内容
             services.AddConfigure(Configuration);
 
             services.AddScoped(typeof(IUserService), typeof(UserService));
+
+
+
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = "Cookies";
+                options.DefaultChallengeScheme = "oidc"; //oidc => open id connect
+            })
+            .AddCookie("Cookies")
+            .AddOpenIdConnect("oidc", options =>
+            {
+                options.SignInScheme = "Cookies";
+                options.Authority = $"http://{Configuration["Identity:IP"]}:{Configuration["Identity:Port"]}";
+                options.RequireHttpsMetadata = false;
+                options.ClientId = "cas.mvc.client.implicit";
+                options.ResponseType = "id_token token";  //允许返回access token
+                options.SaveTokens = true;
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
