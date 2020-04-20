@@ -48,7 +48,7 @@ namespace Iris.UserApi.Extensions
 
             //AddCors(services, configuration);
 
-            AddSwagger(services, Env);
+            //AddSwagger(services, Env);
         }
 
         /// <summary>

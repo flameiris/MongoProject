@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.SwaggerUI;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Iris.UserApi
 {
@@ -38,23 +39,20 @@ namespace Iris.UserApi
             services.AddScoped(typeof(IUserService), typeof(UserService));
 
 
-
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
-            services.AddAuthentication(options =>
+            //IdentityServer
+            services.AddAuthorization();
+            services.AddAuthentication("Bearer")
+            .AddIdentityServerAuthentication(options =>
             {
-                options.DefaultScheme = "Cookies";
-                options.DefaultChallengeScheme = "oidc"; //oidc => open id connect
-            })
-            .AddCookie("Cookies")
-            .AddOpenIdConnect("oidc", options =>
-            {
-                options.SignInScheme = "Cookies";
-                options.Authority = $"http://{Configuration["Identity:IP"]}:{Configuration["Identity:Port"]}";
+                //配置Identityserver的授权地址
+                options.Authority = "http://localhost:10000";
+                //不需要https    
                 options.RequireHttpsMetadata = false;
-                options.ClientId = "cas.mvc.client.implicit";
-                options.ResponseType = "id_token token";  //允许返回access token
-                options.SaveTokens = true;
+                //api的name，需要和config的名称相同
+                options.ApiName = "UserApi";
             });
+
+
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -63,25 +61,28 @@ namespace Iris.UserApi
             {
                 app.UseDeveloperExceptionPage();
 
-                app.UseSwagger();
-                app.UseSwaggerUI(c =>
-                {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Iris.UserApi");
-                    //DocExpansion设置为none可折叠所有方法
-                    c.DocExpansion(DocExpansion.None);
-                    //DefaultModelsExpandDepth设置为 - 1 可不显示models
-                    c.DefaultModelsExpandDepth(-1);
-                    //设置Model参数展示方式， Example value 或者 model scheme
-                    c.DefaultModelRendering(ModelRendering.Model);
-                    c.EnableValidator();
-                    c.EnableFilter();
-                    c.EnableDeepLinking();
-                    c.ShowExtensions();
-                });
+                //app.UseSwagger();
+                //app.UseSwaggerUI(c =>
+                //{
+                //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Iris.UserApi");
+                //    //DocExpansion设置为none可折叠所有方法
+                //    c.DocExpansion(DocExpansion.None);
+                //    //DefaultModelsExpandDepth设置为 - 1 可不显示models
+                //    c.DefaultModelsExpandDepth(-1);
+                //    //设置Model参数展示方式， Example value 或者 model scheme
+                //    c.DefaultModelRendering(ModelRendering.Model);
+                //    c.EnableValidator();
+                //    c.EnableFilter();
+                //    c.EnableDeepLinking();
+                //    c.ShowExtensions();
+                //});
             }
 
 
             app.UseExceptionHandling();
+
+            //启用Authentication中间件
+            app.UseAuthentication();
 
             // 配置跨域
             //app.UseCors("AllowSpecificOrigin");

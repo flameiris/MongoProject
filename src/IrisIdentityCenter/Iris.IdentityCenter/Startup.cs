@@ -1,12 +1,18 @@
-﻿using IdentityServer4.Models;
+﻿using IdentityServer4.AspNetIdentity;
+using IdentityServer4.Models;
+using IdentityServer4.Stores;
 using IdentityServer4.Test;
+using IdentityServer4.Validation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Iris.IdentityCenter
 {
@@ -18,11 +24,18 @@ namespace Iris.IdentityCenter
         {
             //添加IdentityServer
             services.AddIdentityServer()
-                       .AddDeveloperSigningCredential()
-                       .AddInMemoryIdentityResources(GetIdentityResources())
-                       .AddTestUsers(GetUsers().ToList())
-                       .AddInMemoryClients(GetClients())
-                       .AddInMemoryApiResources(GetApiResources());
+            //添加证书加密方式，执行该方法，会先判断tempkey.rsa证书文件是否存在，如果不存在的话，就创建一个新的tempkey.rsa证书文件，如果存在的话，就使用此证书文件。
+            .AddDeveloperSigningCredential()
+            //用户（前端、后端用户等）
+            .AddTestUsers(GetUsers().ToList())
+            //自定义用户验证（前端、后端用户等）
+            //.AddResourceOwnerValidator<ResourceOwnerPasswordValidator>()
+            //客户端（App、H5、Web等）
+            .AddInMemoryClients(GetClients())
+            //自定义Client配置
+            //.AddClientStore<ClientStore>()
+            //资源站点(UserApi、OrderApi等)
+            .AddInMemoryApiResources(GetApiResources());
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -35,33 +48,23 @@ namespace Iris.IdentityCenter
                 app.UseDeveloperExceptionPage();
             }
 
-            //启用IdentityServer
+            //IdentityServer4 中间件添加到Http管道中
             app.UseIdentityServer();
             app.UseStaticFiles();
             app.UseMvcWithDefaultRoute();
         }
 
 
-        public static IEnumerable<IdentityResource> GetIdentityResources()
-        {
-            return new List<IdentityResource>
-            {
-                new IdentityResources.OpenId(),
-                new IdentityResources.Profile(),
-            };
-        }
 
         /// <summary>
-        /// Define which APIs will use this IdentityServer
+        /// 资源站点(UserApi、OrderApi等)
         /// </summary>
         /// <returns></returns>
         public static IEnumerable<ApiResource> GetApiResources()
         {
             return new[]
             {
-                new ApiResource("clientservice", "CAS Client Service"),
-                new ApiResource("productservice", "CAS Product Service"),
-                new ApiResource("agentservice", "CAS Agent Service")
+                new ApiResource("UserApi", "UserApi DisplayName")
             };
         }
 
@@ -75,24 +78,27 @@ namespace Iris.IdentityCenter
             {
                 new Client
                 {
-                    ClientId = "client.api.service",
-                    ClientSecrets = new [] { new Secret("clientsecret".Sha256()) },
+                    ClientId = "Client.App",
+                    //客户端加密方式
+                    ClientSecrets = new [] { new Secret("AppSecret".Sha256()) },
+                    //配置授权类型，可以配置多个授权类型
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
-                    AllowedScopes = new [] { "clientservice" }
+                    //配置授权范围，这里指定哪些API 受此方式保护
+                    AllowedScopes = new [] { "UserApi" },
+                    //配置Token 失效时间
+                    AccessTokenLifetime = 3600
                 },
                 new Client
                 {
-                    ClientId = "product.api.service",
-                    ClientSecrets = new [] { new Secret("productsecret".Sha256()) },
+                    ClientId = "Client.H5",
+                    //客户端加密方式
+                    ClientSecrets = new [] { new Secret("H5Secret".Sha256()) },
+                    //配置授权类型，可以配置多个授权类型
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
-                    AllowedScopes = new [] { "clientservice", "productservice" }
-                },
-                new Client
-                {
-                    ClientId = "agent.api.service",
-                    ClientSecrets = new [] { new Secret("agentsecret".Sha256()) },
-                    AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
-                    AllowedScopes = new [] { "agentservice", "clientservice", "productservice" }
+                    //配置授权范围，这里指定哪些API 受此方式保护
+                    AllowedScopes = new [] { "UserApi" },
+                    //配置Token 失效时间
+                    AccessTokenLifetime = 3600
                 }
             };
         }
@@ -108,22 +114,103 @@ namespace Iris.IdentityCenter
                 new TestUser
                 {
                     SubjectId = "10001",
-                    Username = "test1@hotmail.com",
-                    Password = "test1password"
-                },
-                new TestUser
-                {
-                    SubjectId = "10002",
-                    Username = "test2@hotmail.com",
-                    Password = "test2password"
-                },
-                new TestUser
-                {
-                    SubjectId = "10003",
-                    Username = "test3@hotmail.com",
-                    Password = "test3password"
+                    Username = "FlameIris",
+                    Password = "yq@123"
                 }
             };
+        }
+    }
+
+
+
+
+
+
+    public class ResourceOwnerPasswordValidator : IResourceOwnerPasswordValidator
+    {
+        public async Task ValidateAsync(ResourceOwnerPasswordValidationContext context)
+        {
+            try
+            {
+                var userName = context.UserName;
+                var password = context.Password;
+
+                //验证用户,这么可以到数据库里面验证用户名和密码是否正确
+                var claimList = await ValidateUserAsync(userName, password);
+
+                // 验证账号
+                context.Result = new GrantValidationResult
+                (
+                    subject: userName,
+                    authenticationMethod: "custom",
+                    claims: claimList.ToArray()
+                 );
+            }
+            catch (Exception ex)
+            {
+                //验证异常结果
+                context.Result = new GrantValidationResult()
+                {
+                    IsError = true,
+                    Error = ex.Message
+                };
+            }
+        }
+
+        #region Private Method
+        /// <summary>
+        /// 验证用户
+        /// </summary>
+        /// <param name="loginName"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        private async Task<List<Claim>> ValidateUserAsync(string loginName, string password)
+        {
+            //TODO 这里可以通过用户名和密码到数据库中去验证是否存在，
+            // 以及角色相关信息，我这里还是使用内存中已经存在的用户和密码
+            var user = new TestUser
+            {
+                SubjectId = "10001",
+                Username = "FlameIris",
+                Password = "yq@123"
+            };
+
+            if (user == null)
+                throw new Exception("登录失败，用户名和密码不正确");
+
+            return new List<Claim>()
+            {
+                new Claim(ClaimTypes.Name, $"{loginName}"),
+            };
+        }
+        #endregion
+    }
+
+
+
+
+
+    public class ClientStore : IClientStore
+    {
+        public async Task<Client> FindClientByIdAsync(string clientId)
+        {
+            #region 用户名密码
+            var memoryClients = new List<Client>();
+            if (memoryClients.Any(oo => oo.ClientId == clientId))
+            {
+                return memoryClients.FirstOrDefault(oo => oo.ClientId == clientId);
+            }
+            #endregion
+
+            #region 通过数据库查询Client 信息
+            return GetClient(clientId);
+            #endregion
+        }
+
+        private Client GetClient(string client)
+        {
+            //TODO 根据数据库查询
+            return null;
         }
     }
 
