@@ -12,7 +12,7 @@ namespace Iris.MongoDB.Extensions
         /// <param name="services"></param>
         /// <param name="configuration"></param>
         /// <returns></returns>
-        public static void Add(this IServiceCollection services, IConfiguration configuration, IHostingEnvironment Env)
+        public static void AddMongoDB(this IServiceCollection services, IConfiguration configuration, IHostingEnvironment Env)
         {
             services.Configure<MongodbOptions>(configuration.GetSection("MongoConnection"));
             services.AddSingleton(typeof(IMongoDbManager<>), typeof(MongoDbManager<>));

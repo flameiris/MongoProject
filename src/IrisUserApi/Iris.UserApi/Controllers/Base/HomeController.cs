@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Linq;
 
 namespace Iris.UserApi.Controllers.Base
 {
@@ -29,9 +30,9 @@ namespace Iris.UserApi.Controllers.Base
 
         [Authorize]
         [HttpGet]
-        public string Index2(string name = "abc", int age = 18)
+        public JsonResult Index2(string name = "abc", int age = 18)
         {
-            return "OK";
+            return new JsonResult(from c in HttpContext.User.Claims select new { c.Type, c.Value });
         }
     }
 }

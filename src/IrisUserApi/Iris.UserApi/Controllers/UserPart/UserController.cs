@@ -17,15 +17,11 @@ namespace Iris.UserApi.Controllers.UserPart
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
-
-        private readonly IMongoDbManager<User> _userMongo;
         public UserController(
-            IUserService userService,
-            IMongoDbManager<User> userMongo
+            IUserService userService
             )
         {
             _userService = userService;
-            _userMongo = userMongo;
         }
 
         /// <summary>

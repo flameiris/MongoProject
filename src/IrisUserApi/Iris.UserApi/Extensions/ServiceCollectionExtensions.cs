@@ -36,7 +36,7 @@ namespace Iris.UserApi.Extensions
             AddMvc(services);
 
             AddLoggingServiceCollectionExtensions.Add(services, configuration, Env);
-            AddMongoDBServiceCollectionExtensions.Add(services, configuration, Env);
+            AddMongoDBServiceCollectionExtensions.AddMongoDB(services, configuration, Env);
 
             AddRedis(services, configuration);
 
