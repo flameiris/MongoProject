@@ -1,5 +1,6 @@
 ﻿using IdentityServer4.Models;
 using IdentityServer4.Stores;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,25 +11,29 @@ namespace Iris.Identity
 {
     public class ClientStore : IClientStore
     {
-        public async Task<Client> FindClientByIdAsync(string clientId)
+        public IConfiguration Configuration { get; }
+        public ClientStore(IConfiguration configuration)
         {
-            #region 用户名密码
-            var memoryClients = new List<Client>();
-            if (memoryClients.Any(oo => oo.ClientId == clientId))
-            {
-                return memoryClients.FirstOrDefault(oo => oo.ClientId == clientId);
-            }
-            #endregion
-
-            #region 通过数据库查询Client 信息
-            return GetClient(clientId);
-            #endregion
+            Configuration = configuration;
         }
 
-        private Client GetClient(string client)
+        public async Task<Client> FindClientByIdAsync(string clientId)
         {
-            //TODO 根据数据库查询
-            return null;
+            var clients = Configuration.GetSection("ClientList").Get<List<Identity.Models.Identity.Client>>()
+                           .Select(x => new Client
+                           {
+                               ClientId = x.ClientId,
+                               //客户端加密方式
+                               ClientSecrets = new[] { new Secret(x.ClientSecrets) },
+                               //配置授权类型，可以配置多个授权类型
+                               AllowedGrantTypes = (ICollection<string>)typeof(GrantTypes).GetProperty(x.AllowedGrantTypes).GetValue(null, null),
+                               //配置授权范围，这里指定哪些API 受此方式保护
+                               AllowedScopes = x.AllowedScopes,
+                               //配置Token 失效时间
+                               AccessTokenLifetime = x.AccessTokenLifetime
+                           });
+
+            return clients.FirstOrDefault(x => x.ClientId == clientId);
         }
     }
 }
