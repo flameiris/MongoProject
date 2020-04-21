@@ -5,10 +5,6 @@ VisualStudioVersion = 16.0.29318.209
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Iris.UserApi", "src\IrisUserApi\Iris.UserApi\Iris.UserApi.csproj", "{46D157B9-046F-465E-A8C0-4C55E2E482A8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Iris.FrameCore", "src\IrisUserApi\Iris.FrameCore\Iris.FrameCore.csproj", "{C43C1DB6-A767-48BC-ADD1-45645D89BEE9}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Iris.Models", "src\IrisUserApi\Iris.Model\Iris.Models.csproj", "{87986712-A404-4ED4-99ED-83B1DFC6848B}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Iris.Service", "src\IrisUserApi\Iris.Service\Iris.Service.csproj", "{8D8B3A29-98B5-4F23-93C3-4FF29E324550}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{7F8C4108-FD98-41D6-94D1-EFD3A5A0A0B5}"
@@ -18,6 +14,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Iris.MongoDB", "src\Iris.MongoDB\Iris.MongoDB.csproj", "{D84FD3DF-4102-4E12-ADED-C91068D29104}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Iris.Infrastructure", "src\Iris.Infrastructure\Iris.Infrastructure.csproj", "{CDDD3D61-DDB2-4478-8B66-045046EF4D69}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Iris.Models", "src\Iris.Model\Iris.Models.csproj", "{981FA2FF-6E95-494A-A876-CB0069EB60A9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Iris.FrameCore", "src\Iris.FrameCore\Iris.FrameCore.csproj", "{688C5F90-E916-497A-844E-D851989D5C5C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,14 +29,6 @@ Global
 		{46D157B9-046F-465E-A8C0-4C55E2E482A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46D157B9-046F-465E-A8C0-4C55E2E482A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46D157B9-046F-465E-A8C0-4C55E2E482A8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C43C1DB6-A767-48BC-ADD1-45645D89BEE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C43C1DB6-A767-48BC-ADD1-45645D89BEE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C43C1DB6-A767-48BC-ADD1-45645D89BEE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C43C1DB6-A767-48BC-ADD1-45645D89BEE9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{87986712-A404-4ED4-99ED-83B1DFC6848B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{87986712-A404-4ED4-99ED-83B1DFC6848B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{87986712-A404-4ED4-99ED-83B1DFC6848B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{87986712-A404-4ED4-99ED-83B1DFC6848B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8D8B3A29-98B5-4F23-93C3-4FF29E324550}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8D8B3A29-98B5-4F23-93C3-4FF29E324550}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D8B3A29-98B5-4F23-93C3-4FF29E324550}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -53,6 +45,14 @@ Global
 		{CDDD3D61-DDB2-4478-8B66-045046EF4D69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CDDD3D61-DDB2-4478-8B66-045046EF4D69}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CDDD3D61-DDB2-4478-8B66-045046EF4D69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{981FA2FF-6E95-494A-A876-CB0069EB60A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{981FA2FF-6E95-494A-A876-CB0069EB60A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{981FA2FF-6E95-494A-A876-CB0069EB60A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{981FA2FF-6E95-494A-A876-CB0069EB60A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{688C5F90-E916-497A-844E-D851989D5C5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{688C5F90-E916-497A-844E-D851989D5C5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{688C5F90-E916-497A-844E-D851989D5C5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{688C5F90-E916-497A-844E-D851989D5C5C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

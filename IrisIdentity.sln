@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Iris.Infrastructure", "src\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iris.Identity", "src\IrisIdentityCenter\Iris.Inentity\Iris.Identity.csproj", "{9E078648-20CE-49EC-8468-D233E8BB5756}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Iris.Models", "src\IrisUserApi\Iris.Model\Iris.Models.csproj", "{E422AEFE-615C-4356-A86D-A932BB722D92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Iris.Models", "src\Iris.Model\Iris.Models.csproj", "{E422AEFE-615C-4356-A86D-A932BB722D92}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Iris.MongoDB", "src\Iris.MongoDB\Iris.MongoDB.csproj", "{92D267BB-F27D-45EB-8093-8231E39CB909}"
 EndProject

@@ -1,8 +1,6 @@
 ﻿using Iris.Models.Common;
 using Iris.Models.Dto;
-using Iris.Models.Model.UserPart;
 using Iris.Models.Request;
-using Iris.MongoDB;
 using Iris.Service.IService.UserPart;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;

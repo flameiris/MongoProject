@@ -37,11 +37,8 @@ namespace Iris.Service.Service.UserPart
             User user = new User
             {
                 Username = request.Username,
-                Password = request.Password,
-                Baseinfo = new UserBaseinfo
-                {
-                    Nickname = request.Nickname
-                }
+                Password = request.Password
+
             };
 
             var flag = await _userMongo.AddAsync(user);

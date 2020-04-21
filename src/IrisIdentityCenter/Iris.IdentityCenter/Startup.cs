@@ -1,19 +1,10 @@
-﻿using IdentityModel;
-using IdentityServer4.Models;
-using IdentityServer4.Test;
-using Iris.Identity;
+﻿using Iris.Identity;
 using Iris.MongoDB.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using MongoDB.Bson.IO;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Iris.IdentityCenter
 {

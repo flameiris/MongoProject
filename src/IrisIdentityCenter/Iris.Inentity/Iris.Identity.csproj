@@ -16,6 +16,6 @@
 
 
   <ItemGroup>
-    <ProjectReference Include="..\..\IrisUserApi\Iris.Model\Iris.Models.csproj" />
+    <ProjectReference Include="..\..\Iris.Model\Iris.Models.csproj" />
   </ItemGroup>
 </Project>

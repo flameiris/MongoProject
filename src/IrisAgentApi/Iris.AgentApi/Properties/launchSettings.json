@@ -1,0 +1,12 @@
+﻿{
+  "profiles": {
+    "Iris.AgentApi": {
+      "commandName": "Project",
+      "launchBrowser": false,
+      "applicationUrl": "http://localhost:10002",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
