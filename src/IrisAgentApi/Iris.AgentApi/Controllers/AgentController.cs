@@ -1,4 +1,5 @@
-﻿using Iris.Models.Common;
+﻿using Iris.AgentApi.Controllers.Base;
+using Iris.Models.Common;
 using Iris.Models.Dto;
 using Iris.Models.Request;
 using Iris.Service.IService;
@@ -10,9 +11,7 @@ namespace Iris.AgentApi.Controllers
     /// <summary>
     /// 用户控制器
     /// </summary>
-    [Route("api/[controller]/[action]")]
-    [ApiController]
-    public class AgentController : ControllerBase
+    public class AgentController : BaseController
     {
         private readonly IAgentService _agentService;
         public AgentController(

@@ -1,22 +1,27 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace Iris.AgentApi.Controllers.Base
 {
+
     [ApiController]
+    [Route("api/[controller]/[action]")]
+    [Authorize]
     public class BaseController : ControllerBase
     {
         private readonly ILogger _logger;
-        private readonly IMapper _mapper;
 
+        public BaseController()
+        {
+
+        }
         public BaseController(
             ILogger<HomeController> logger
-            , IMapper mapper
             )
         {
             _logger = logger;
-            _mapper = mapper;
         }
 
 
