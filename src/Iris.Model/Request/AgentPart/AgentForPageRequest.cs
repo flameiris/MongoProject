@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Iris.Models.Request
+namespace Iris.Models.Request.AgentPart
 {
     public class AgentForPageRequest
     {

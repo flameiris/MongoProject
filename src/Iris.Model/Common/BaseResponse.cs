@@ -46,7 +46,17 @@ namespace Iris.Models.Common
 
     public class BaseResponse
     {
-        public int Code { get; set; }
+        public BaseResponse()
+        {
+
+        }
+        private BusinessStatusType _code;
+        public BusinessStatusType Code
+        {
+            get { return (BusinessStatusType)_code; }
+            set { _code = value; }
+        }
+
         public string Message { get; set; }
         public object Response { get; set; }
 
@@ -61,7 +71,7 @@ namespace Iris.Models.Common
 
         public BaseResponse(BusinessStatusType code, string message, object response)
         {
-            Code = (int)code;
+            Code = code;
             Message = message;
             Response = response;
         }
@@ -76,6 +86,11 @@ namespace Iris.Models.Common
         public static BaseResponse GetBaseResponse(BusinessStatusType code, string message)
         {
             return new BaseResponse(code, message);
+        }
+
+        public static BaseResponse GetBaseResponse(BusinessStatusType code, object response)
+        {
+            return new BaseResponse(code, "", response);
         }
 
         public static BaseResponse GetBaseResponse(BusinessStatusType code, string message, object response)

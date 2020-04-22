@@ -7,7 +7,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace Iris.Identity
+namespace Iris.Identity.CustomConfig
 {
     public class CustomProfileService : IProfileService
     {

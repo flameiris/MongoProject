@@ -17,14 +17,14 @@ namespace Iris.AgentApi.Filters
             {
                 if (context.Result is ObjectResult objResult)
                 {
-                    if (objResult.Value is BaseResponse response)
-                        if (response != null)
-                        {
-                            if (response.Code < 200 || response.Code > 299)
-                            {
-                                context.HttpContext.Response.StatusCode = response.Code;
-                            }
-                        }
+                    //if (objResult.Value is BaseResponse response)
+                    //    if (response != null)
+                    //    {
+                    //        if (response.Code < 200 || response.Code > 299)
+                    //        {
+                    //            context.HttpContext.Response.StatusCode = response.Code;
+                    //        }
+                    //    }
                 }
             }
         }

@@ -1,26 +1,30 @@
 ﻿using IdentityServer4.Validation;
-using Iris.Models.Model.UserPart;
-using Iris.MongoDB;
-using Microsoft.Extensions.DependencyInjection;
+using Iris.Identity.Service;
+using Iris.Models.Common;
+using Iris.Models.Dto;
+using Iris.Models.Enums;
+using Iris.Models.Request.AgentPart;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace Iris.Identity
+namespace Iris.Identity.CustomConfig
 {
     public class ResourceOwnerPasswordValidator : IResourceOwnerPasswordValidator
     {
-        private readonly IServiceProvider _provider;
         private readonly ILogger _logger;
+        private readonly IAgentService _agentService;
         public ResourceOwnerPasswordValidator(
-            IServiceProvider provider,
-            ILogger<ResourceOwnerPasswordValidator> logger
+            ILogger<ResourceOwnerPasswordValidator> logger,
+            IAgentService agentService
             )
         {
-            _provider = provider;
             _logger = logger;
+            _agentService = agentService;
         }
 
         public async Task ValidateAsync(ResourceOwnerPasswordValidationContext context)
@@ -31,25 +35,32 @@ namespace Iris.Identity
                 var password = context.Password;
 
                 //判断账户密码是否正确
-                var _userMongo = _provider.GetService<IMongoDbManager<User>>();
-                var user = await _userMongo.GetFirstOrDefaultAsync(x => x.Username == userName && x.Password == password);
-                if (user == null) throw new Exception();
+                var res = await _agentService.GetAgentByNameAndPwd(new AgentForIdCenterRequest
+                {
+                    Name = context.UserName,
+                    Password = context.Password
+                });
+                if (res.Code != BusinessStatusType.OK)
+                {
 
+                }
+                dynamic dto = res.Response;
+                string id = dto.Id;
                 //获取用户详细数据、角色、权限
 
                 //设置缓存，失效时间等于Token失效时间
 
                 //设置用户Claim，值为缓存键
-                Claim userinfo = new Claim("Userinfo", "");
+                Claim userinfo = new Claim("Userinfo", JsonConvert.SerializeObject(dto));
 
 
 
 
                 context.Result = new GrantValidationResult
                 (
-                    subject: user.Id,
+                    subject: id,
                     authenticationMethod: "custom",
-                    claims: new List<Claim> { userinfo }.ToArray()
+                    claims: new List<Claim> { userinfo }
                  );
             }
             catch (Exception ex)

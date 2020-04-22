@@ -1,5 +1,8 @@
-﻿using Iris.Identity;
-using Iris.MongoDB.Extensions;
+﻿using Iris.FrameCore;
+using Iris.Identity.CustomConfig;
+using Iris.Identity.CustomFilter;
+using Iris.Identity.CustomGrantValidator;
+using Iris.Identity.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -27,7 +30,10 @@ namespace Iris.IdentityCenter
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc(opt =>
+            {
+                opt.Filters.Add(typeof(CustomResponseFitler));
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             //添加IdentityServer
             services.AddIdentityServer()
@@ -39,9 +45,16 @@ namespace Iris.IdentityCenter
             .AddClientStore<ClientStore>()
             //资源站点(UserApi、OrderApi等)
             .AddInMemoryApiResources(ResourceStore.GetApiResources(Configuration))
-            .AddProfileService<CustomProfileService>();
+            //添加自定义Claim
+            .AddProfileService<CustomProfileService>()
+            .AddExtensionGrantValidator<MsgGrantValidator>();
 
-            services.AddMongoDB(Configuration, Env);
+
+
+            //services.AddMongoDB(Configuration, Env);
+            services.AddScoped(typeof(IAgentService), typeof(AgentService));
+            services.AddSingleton(typeof(HttpWebClient));
+
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

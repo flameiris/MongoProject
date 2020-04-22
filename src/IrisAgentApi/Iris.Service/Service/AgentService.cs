@@ -5,6 +5,7 @@ using Iris.Models.Dto;
 using Iris.Models.Enums;
 using Iris.Models.Model.AgentPart;
 using Iris.Models.Request;
+using Iris.Models.Request.AgentPart;
 using Iris.MongoDB;
 using Iris.Service.IService;
 using MongoDB.Driver;
@@ -96,6 +97,25 @@ namespace Iris.Service.Service
             pageModel.DataCount = count;
 
             return BaseResponse.GetBaseResponse(BusinessStatusType.OK, null, pageModel);
+        }
+
+        /// <summary>
+        /// 根据用户名密码获取用户
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<BaseResponse> GetAgentByNameAndPwd(AgentForIdCenterRequest r)
+        {
+            var agent = await _agentMongo.GetFirstOrDefaultAsync(x => x.Agentname == r.Name && x.Version == 1.0);
+            if (agent == null) return BaseResponse.GetBaseResponse(BusinessStatusType.NoData);
+
+            var md5Pwd = (r.Password + agent.Salt).MD5();
+            agent = await _agentMongo.GetFirstOrDefaultAsync(x => x.Agentname == r.Name && x.Password == md5Pwd && x.Version == 1.0);
+            if (agent == null) return BaseResponse.GetBaseResponse(BusinessStatusType.NoData);
+
+
+            var dto = AgentForDetailDto.MapTo(agent);
+            return BaseResponse.GetBaseResponse(BusinessStatusType.OK, null, dto);
         }
     }
 }

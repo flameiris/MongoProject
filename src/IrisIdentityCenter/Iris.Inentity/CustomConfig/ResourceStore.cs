@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Iris.Identity
+namespace Iris.Identity.CustomConfig
 {
     public class ResourceStore
     {

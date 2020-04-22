@@ -19,6 +19,12 @@ namespace Iris.Gateway
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((webhost, builder) =>
+                {
+
+                    builder.SetBasePath(webhost.HostingEnvironment.ContentRootPath)
+                    .AddJsonFile("Ocelot.json", false, true);
+                })
                 .UseStartup<Startup>();
     }
 }

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Iris.Identity
+namespace Iris.Identity.CustomConfig
 {
     public class ClientStore : IClientStore
     {
@@ -17,7 +17,8 @@ namespace Iris.Identity
 
         public async Task<Client> FindClientByIdAsync(string clientId)
         {
-            var clients = Configuration.GetSection("ClientList").Get<List<Identity.Models.Identity.Client>>()
+
+            var clients = Configuration.GetSection("ClientList").Get<List<Models.Identity.Client>>()
                            .Select(x => new Client
                            {
                                ClientId = x.ClientId,

@@ -5,9 +5,8 @@ using Microsoft.Extensions.Logging;
 
 namespace Iris.AgentApi.Controllers.Base
 {
-
     [ApiController]
-    [Route("api/[controller]/[action]")]
+    [Route("agentapi/[controller]/[action]")]
     [Authorize]
     public class BaseController : ControllerBase
     {

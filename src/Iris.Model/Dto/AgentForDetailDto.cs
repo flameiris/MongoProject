@@ -5,6 +5,7 @@ namespace Iris.Models.Dto
 {
     public class AgentForDetailDto
     {
+        public string Id { get; set; }
         public string Agentname { get; set; }
         public string ProfilePicture { get; set; }
         public string Mobile { get; set; }
@@ -16,6 +17,7 @@ namespace Iris.Models.Dto
         {
             //var m = _mapper.Map<UserForDetailDto>(_);
             AgentForDetailDto m = new AgentForDetailDto();
+            m.Id = _.Id;
             m.Agentname = _.Agentname;
             m.ProfilePicture = _.ProfilePicture;
             m.Mobile = _.Mobile;
