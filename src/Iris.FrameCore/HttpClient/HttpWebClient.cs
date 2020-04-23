@@ -31,7 +31,7 @@ namespace Iris.FrameCore
         /// <param name="encoding"></param>
         /// <param name="timeOut"></param>
         /// <returns></returns>
-        public async Task<(string returnstr, string errmsg)> PostXmlAsync(string url, string strxml, Encoding encoding, int timeOut = 10000)
+        public async Task<(string returnstr, string errmsg)> PostXmlAsync(string url, string strxml, Encoding encoding, int timeOutFromSeconds = 10)
         {
             var client = _httpClientFactory.CreateClient();
             string ret = null;
@@ -43,7 +43,7 @@ namespace Iris.FrameCore
                 HttpContent hc = new ByteArrayContent(data);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xhtml+xml"));
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));
-                hc.Headers.Add("Timeout", timeOut.ToString());
+                client.Timeout = TimeSpan.FromSeconds(timeOutFromSeconds);
                 hc.Headers.Add("KeepAlive", "true");
 
                 var r = await client.PostAsync(url, hc);
@@ -68,15 +68,15 @@ namespace Iris.FrameCore
         /// <param name="url">地址</param>
         /// <param name="entity">POST数据</param>
         /// <returns></returns>
-        public async Task<(HttpStatusCode code, string ret)> PostJsonAsync(string url, string body, int timeOut = 10000, string mediaType = "application/json")
+        public async Task<(HttpStatusCode code, string ret)> PostJsonAsync(string url, string body, int timeOutFromSeconds = 10, string mediaType = "application/json")
         {
             var client = _httpClientFactory.CreateClient();
             HttpStatusCode code = HttpStatusCode.OK;
             string ret;
             try
             {
+                client.Timeout = TimeSpan.FromSeconds(timeOutFromSeconds);
                 HttpContent hc = new StringContent(body);
-                hc.Headers.Add("Timeout", timeOut.ToString());
                 hc.Headers.Add("KeepAlive", "true");
                 hc.Headers.ContentType.MediaType = mediaType;
                 var r = await client.PostAsync(url, hc);
@@ -84,8 +84,9 @@ namespace Iris.FrameCore
                 {
                     code = r.StatusCode;
                     ret = await r.Content.ReadAsStringAsync();
-                    return (code, ret);
+                    return (r.StatusCode, ret);
                 }
+                code = r.StatusCode;
                 ret = await r.Content.ReadAsStringAsync();
             }
             catch (Exception e)
@@ -103,12 +104,12 @@ namespace Iris.FrameCore
         /// <param name="encoding"></param>
         /// <param name="timeOut"></param>
         /// <returns>Item1 返回数据 Item2 错误信息</returns>
-        public async Task<(string returnstr, string errmsg)> GetAsync(string url, string query, int timeOut = 10000)
+        public async Task<(string returnstr, string errmsg)> GetAsync(string url, string query, int timeOutFromSeconds = 10)
         {
             var client = _httpClientFactory.CreateClient();
             string ret = "";
             string errmsg = null;
-            client.Timeout = new TimeSpan(0, 0, 0, 0, timeOut);
+            client.Timeout = TimeSpan.FromSeconds(timeOutFromSeconds);
 
             try
             {
