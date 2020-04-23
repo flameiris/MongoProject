@@ -14,8 +14,15 @@ namespace Iris.MongoDB
         /// <param name="entity"></param>
         /// <returns></returns>
         Task<bool> AddAsync(T entity);
-
+        Task<string> AddRetIDAsync(T entity);
+        Task<bool> AddRangeAsync(List<T> entitys);
         Task<long> CountAsync(FilterDefinition<T> filter = null);
+
+
+        Task<bool> Update(string id, MongoModel<T> mongo);
+
+
+
 
         Task<T> GetFirstOrDefaultAsync(Expression<Func<T, bool>> @where = null);
         Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> @where = null);

@@ -1,6 +1,10 @@
 {
   "ReRoutes": [
     {
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "GatewayKey",
+        "AllowedScopes": []
+      },
       "DownstreamPathTemplate": "/agentapi/{url}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
@@ -11,6 +15,19 @@
       ],
       "UpstreamPathTemplate": "/agentapi/{url}",
       "UpstreamHttpMethod": [ "Get", "Post" ]
+    },
+
+    {
+      "DownstreamPathTemplate": "/connect/token",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 10000
+        }
+      ],
+      "UpstreamPathTemplate": "/connect/token",
+      "UpstreamHttpMethod": [ "Post" ]
     }
   ],
   "GlobalConfiguration": {

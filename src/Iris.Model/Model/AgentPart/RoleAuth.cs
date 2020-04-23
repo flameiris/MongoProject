@@ -2,9 +2,9 @@
 
 namespace Iris.Models.Model.AgentPart
 {
-    public class RoleAuth
+    public class RolePermission
     {
-        public int AuthType { get; set; }
+        public int PermissionType { get; set; }
         public List<string> AuthIdList { get; set; }
     }
 }

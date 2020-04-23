@@ -8,8 +8,8 @@ namespace Iris.Models.Request
     /// </summary>
     public class UserForPageRequest
     {
-        public string Agentname { get; set; }
-        public AgentStatusEnum AgentStatus { get; set; }
+        public string Username { get; set; }
+        public AgentStatusEnum UserStatus { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
 

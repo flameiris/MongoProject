@@ -1,6 +1,7 @@
 ﻿using Iris.AgentApi.Controllers.Base;
 using Iris.Models.Common;
 using Iris.Models.Dto;
+using Iris.Models.Dto.AgentPart;
 using Iris.Models.Request;
 using Iris.Models.Request.AgentPart;
 using Iris.Service.IService;
@@ -28,9 +29,9 @@ namespace Iris.AgentApi.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<BaseResponse> Create(AgentForCreateRequest request)
+        public async Task<BaseResponse> Create(AgentForCreateUpdateRequest r)
         {
-            return await _agentService.Create(request);
+            return await _agentService.Create(r);
         }
 
         /// <summary>
@@ -50,10 +51,23 @@ namespace Iris.AgentApi.Controllers
         /// <param name="pageModel">分页对象</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<BaseResponse> GetListByPage(PageModel<AgentForPageRequest, AgentForListDto> pageModel)
+        public async Task<BaseResponse> GetListByPage(PageModel<AgentForPageRequest, AgentForListDto> p)
         {
-            var res = await _agentService.GetListByPage(pageModel);
+            var res = await _agentService.GetListByPage(p);
             return res;
+        }
+
+        /// <summary>
+        /// 更新
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<BaseResponse> UpdateDetail(AgentForCreateUpdateRequest p)
+        {
+            //return await _agentService.UpdateDetail(p);
+
+            return null;
         }
     }
 }

@@ -1,21 +1,13 @@
 ﻿using Iris.Models.Enums;
-using Iris.MongoDB;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-using System.ComponentModel.DataAnnotations;
+using Iris.Models.Model.AgentPart;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace Iris.Models.Model.AgentPart
+namespace Iris.Models.Request.AgentPart
 {
-    public class Permission : IBaseModel
+    public class PermissionForCreateRequest
     {
-        [Key]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
-        public float Version { get; set; } = 1.0F;
-        /// <summary>
-        /// 权限类型
-        /// </summary>
-        [BsonRepresentation(BsonType.String)]
         public PermissionEnum Type { get; set; }
         /// <summary>
         /// 权限名称
@@ -28,10 +20,5 @@ namespace Iris.Models.Model.AgentPart
         /// Type为数据权限时，为具体数据所属
         /// </summary>
         public string Content { get; set; }
-
     }
-
-
-
-
 }

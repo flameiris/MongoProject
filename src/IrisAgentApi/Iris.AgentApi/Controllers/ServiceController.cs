@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Iris.AgentApi.Controllers
 {
     [ApiController]
-    [Route("agentapi/[controller]/[action]")]
+    [Route("agentapiservice/[action]")]
     public class ServiceController : ControllerBase
     {
         private readonly IAgentService _agentService;

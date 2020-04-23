@@ -51,5 +51,13 @@ namespace Iris.MongoDB
         {
             ProjectionList.AddRange(fields.ToList().Select(x => Projection.Exclude(x)));
         }
+
+        public void Set(Dictionary<string, string> dic)
+        {
+            foreach (var item in dic)
+            {
+                UpdateList.Add(Builders<T>.Update.Set(item.Key, item.Value));
+            }
+        }
     }
 }

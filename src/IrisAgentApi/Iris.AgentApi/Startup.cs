@@ -35,6 +35,7 @@ namespace Iris.AgentApi
             services.AddConfigure(Configuration);
 
             services.AddScoped(typeof(IAgentService), typeof(AgentService));
+            services.AddScoped(typeof(IAuthService), typeof(AuthService));
 
 
             //IdentityServer

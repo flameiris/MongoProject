@@ -108,6 +108,43 @@ namespace Iris.MongoDB
 
 
 
+
+        /// <summary>
+        /// 更新指定字段
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="mongo"></param>
+        /// <returns></returns>
+        public async Task<bool> Update(string id, MongoModel<T> mongo)
+        {
+            try
+            {
+                var updatefilter = Builders<T>.Update.Combine(mongo.UpdateList);
+                var r = await _collection.UpdateOneAsync(mongo.Filter.And(mongo.FilterList), updatefilter, null);
+                var a = r.IsAcknowledged;
+                var b = r.ModifiedCount > 0;
+                return a && b;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Mongodb 更新指定字段错误，参数为 id={id}  ： {JsonConvert.SerializeObject(mongo.UpdateList)}", e);
+                return false;
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         //public async Task<T> Aggregate()
         //{
         //    try

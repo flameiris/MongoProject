@@ -1,8 +1,8 @@
 ﻿using Iris.Models.Model.AgentPart;
 
-namespace Iris.Models.Dto
+namespace Iris.Models.Dto.AgentPart
 {
-    public class AgentForListDto
+    public class RoleForListDto
     {
 
         public string Username { get; set; }
@@ -12,7 +12,7 @@ namespace Iris.Models.Dto
         public string CreateTime { get; set; }
         public string UpdateTime { get; set; }
 
-        public static AgentForListDto MapTo(Agent _)
+        public static RoleForListDto MapTo(Role _)
         {
             //var model = _mapper.Map<UserForListDto>(user);
 

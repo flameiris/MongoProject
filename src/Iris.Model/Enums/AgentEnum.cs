@@ -26,6 +26,6 @@ namespace Iris.Models.Enums
         [Description("正常")]
         Normal = 1,
         [Description("锁定")]
-        Cancel = 2,
+        Locked = 2,
     }
 }

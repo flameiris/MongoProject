@@ -7,7 +7,7 @@ namespace Iris.AgentApi.Controllers.Base
 {
     [ApiController]
     [Route("agentapi/[controller]/[action]")]
-    [Authorize]
+    //[Authorize]
     public class BaseController : ControllerBase
     {
         private readonly ILogger _logger;

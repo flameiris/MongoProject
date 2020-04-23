@@ -1,6 +1,6 @@
 ﻿using Iris.Models.Model.UserPart;
 
-namespace Iris.Models.Dto
+namespace Iris.Models.Dto.UserPart
 {
 
     //[AutoMap(typeof(User))]

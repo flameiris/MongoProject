@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Iris.Models.Enums
+namespace Iris.Models.Dto.AgentPart
 {
-    public enum Auth 
+    public class AuthForCreateRoleDto
     {
+
     }
 }

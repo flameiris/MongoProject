@@ -14,6 +14,6 @@ namespace Iris.Models.Model.AgentPart
         public float Version { get; set; } = 1.0F;
 
         public string Name { get; set; }
-        public List<RoleAuth> AuthIdList { get; set; }
+        public List<RolePermission> PermissionIdList { get; set; }
     }
 }

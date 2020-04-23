@@ -15,7 +15,7 @@ namespace Iris.Identity.Service
 {
     public class AgentService : IAgentService
     {
-        private readonly string _url = "http://localhost:10002";
+        private readonly string _url = "http://localhost:10002/";
         private readonly HttpWebClient _client;
         public AgentService(
             HttpWebClient client
@@ -26,12 +26,13 @@ namespace Iris.Identity.Service
 
         public async Task<dynamic> GetAgentByNameAndPwd(AgentForIdCenterRequest r)
         {
-            var res = await _client.PostJsonAsync(_url + "/agentapi/service/getagentbynameandpwd", JsonConvert.SerializeObject(r));
+            var requestUrl = "agentapiservice/getagentbynameandpwd";
+            var res = await _client.PostJsonAsync(_url + requestUrl, JsonConvert.SerializeObject(r));
             if (res.code != HttpStatusCode.OK)
             {
 
             }
-            return (dynamic)JObject.Parse(res.ret); ;
+            return (dynamic)JObject.Parse(res.ret);
         }
     }
 }

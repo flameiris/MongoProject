@@ -1,7 +1,7 @@
 ﻿using Iris.Models.Enums;
 using Iris.Models.Model.AgentPart;
 
-namespace Iris.Models.Dto
+namespace Iris.Models.Dto.AgentPart
 {
     public class AgentForDetailDto
     {
