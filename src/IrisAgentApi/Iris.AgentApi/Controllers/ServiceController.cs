@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
 using Iris.AgentApi.Controllers.Base;
 using Iris.Models.Common;
 using Iris.Models.Model.AgentPart;
@@ -38,7 +37,6 @@ namespace Iris.AgentApi.Controllers
         [HttpPost]
         public async Task<BaseResponse> GetAgentByNameAndPwd(AgentForIdCenterRequest request)
         {
-            Thread.Sleep(10000);
             return await _agentService.GetAgentByNameAndPwd(request);
         }
     }

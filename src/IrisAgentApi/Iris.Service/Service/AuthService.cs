@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Iris.Infrastructure.ExtensionMethods;
+﻿using Iris.Infrastructure.ExtensionMethods;
 using Iris.Models.Common;
 using Iris.Models.Dto.AgentPart;
 using Iris.Models.Enums;
@@ -17,7 +16,6 @@ namespace Iris.Service.Service
 {
     public class AuthService : IAuthService
     {
-        private readonly IMapper _mapper;
         private readonly IMongoDbManager<Agent> _agentMongo;
         private readonly IMongoDbManager<Group> _groupMongo;
         private readonly IMongoDbManager<Role> _roleMongo;
@@ -25,7 +23,6 @@ namespace Iris.Service.Service
 
 
         public AuthService(
-            IMapper mapper,
             IMongoDbManager<Agent> agentMongo,
             IMongoDbManager<Group> groupMongo,
             IMongoDbManager<Role> roleMongo,
@@ -33,7 +30,6 @@ namespace Iris.Service.Service
 
             )
         {
-            _mapper = mapper;
             _agentMongo = agentMongo;
             _groupMongo = groupMongo;
             _roleMongo = roleMongo;

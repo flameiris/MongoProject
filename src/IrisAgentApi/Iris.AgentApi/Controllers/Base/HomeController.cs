@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Linq;
@@ -11,15 +10,12 @@ namespace Iris.AgentApi.Controllers.Base
     public class HomeController : ControllerBase
     {
         private readonly ILogger _logger;
-        private readonly IMapper _mapper;
 
         public HomeController(
             ILogger<HomeController> logger
-            , IMapper mapper
             )
         {
             _logger = logger;
-            _mapper = mapper;
         }
 
         [HttpGet]

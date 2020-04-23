@@ -1,7 +1,5 @@
-﻿using AutoMapper;
-using CSRedis;
+﻿using CSRedis;
 using Iris.AgentApi.Filters;
-using Iris.FrameCore.AutoMapper;
 using Iris.FrameCore.RabbitMQ;
 using Iris.FrameCore.Resolvers;
 using Iris.Infrastructure.Extensions;
@@ -41,8 +39,6 @@ namespace Iris.AgentApi.Extensions
             AddRedis(services, configuration);
 
             AddRabbitMQ(services, configuration);
-
-            AddAutoMapper(services);
 
             AddHttpClient(services, configuration);
 
@@ -141,30 +137,6 @@ namespace Iris.AgentApi.Extensions
         {
             services.Configure<RabbitMqOptions>(configuration.GetSection("RabbitMqConfig"));
             services.AddSingleton(typeof(RabbitMqClient));
-        }
-
-
-        /// <summary>
-        /// 新增AutoMapper依赖注入
-        /// </summary>
-        /// <param name="services"></param>
-        /// <param name="configuration"></param>
-        /// <returns></returns>
-        private static void AddAutoMapper(IServiceCollection services)
-        {
-            var configuration = new MapperConfiguration(cfg =>
-            {
-                //cfg.AddMaps("Iris.Models");
-
-                //cfg.CreateMap(typeof(User), typeof(UserForDetailDto));
-
-                cfg.AddProfile(new AutoMapProfile());
-            });
-            configuration.AssertConfigurationIsValid();
-            var mapper = configuration.CreateMapper();
-
-            services.AddSingleton(typeof(IMapper), mapper);
-
         }
 
 

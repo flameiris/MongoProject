@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Iris.Infrastructure.ExtensionMethods;
+﻿using Iris.Infrastructure.ExtensionMethods;
 using Iris.Models.Common;
 using Iris.Models.Dto;
 using Iris.Models.Dto.AgentPart;
@@ -9,6 +8,7 @@ using Iris.Models.Request;
 using Iris.Models.Request.AgentPart;
 using Iris.MongoDB;
 using Iris.Service.IService;
+using Mapster;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -20,19 +20,15 @@ namespace Iris.Service.Service
 {
     public class AgentService : IAgentService
     {
-        private readonly IMapper _mapper;
-
         private readonly IAuthService _authService;
 
         private readonly IMongoDbManager<Agent> _agentMongo;
 
         public AgentService(
-            IMapper mapper,
             IAuthService authService,
             IMongoDbManager<Agent> agentMongo
             )
         {
-            _mapper = mapper;
             _authService = authService;
             _agentMongo = agentMongo;
 
@@ -142,8 +138,7 @@ namespace Iris.Service.Service
             if (!agent.Password.Equals(md5Pwd))
                 return BaseResponse.GetBaseResponse(BusinessStatusType.NoData);
 
-
-            var dto = AgentForDetailDto.MapTo(agent);
+            var dto = agent.Adapt<AgentForDetailDto>();
             return BaseResponse.GetBaseResponse(BusinessStatusType.OK, null, dto);
         }
     }
