@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Iris.AgentApi.Extensions
+namespace Iris.FrameCore.ApiExtensions
 {
     public static class ConfigureConfigurationExtension
     {

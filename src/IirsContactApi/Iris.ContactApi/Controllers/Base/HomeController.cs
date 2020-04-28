@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Linq;
 
-namespace Iris.UserApi.Controllers.Base
+namespace Iris.ContactApi.Controllers.Base
 {
     [Route("api/home/[action]")]
     [ApiController]

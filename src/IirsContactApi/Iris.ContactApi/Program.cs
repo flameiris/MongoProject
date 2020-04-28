@@ -1,11 +1,14 @@
-﻿using Iris.Infrastructure.ExtensionMethods;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using System;
-using System.Security.Cryptography;
-using System.Text;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
-namespace Iris.AgentApi
+namespace Iris.ContactApi
 {
     public class Program
     {

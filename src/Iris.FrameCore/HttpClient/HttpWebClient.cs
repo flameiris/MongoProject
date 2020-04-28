@@ -91,7 +91,7 @@ namespace Iris.FrameCore
             }
             catch (Exception e)
             {
-                return (code, e.Message);
+                return (HttpStatusCode.InternalServerError, e.Message);
             }
             return (code, ret);
         }

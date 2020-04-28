@@ -1,13 +1,11 @@
 ﻿using Iris.FrameCore.ApiExtensions;
 using Iris.FrameCore.ApiExtensions.Middleware;
-using Iris.Service.IService;
-using Iris.Service.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Iris.AgentApi
+namespace Iris.ContactApi
 {
     public class Startup
     {
@@ -34,9 +32,7 @@ namespace Iris.AgentApi
             //添加配置内容
             services.AddConfigure(Configuration);
 
-            services.AddScoped(typeof(IAgentService), typeof(AgentService));
-            services.AddScoped(typeof(IAuthService), typeof(AuthService));
-
+          
 
             //IdentityServer
             services.AddAuthorization();

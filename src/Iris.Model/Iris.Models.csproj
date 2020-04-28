@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <Folder Include="Base\" />
+    <Folder Include="Model\ProjectPart\" />
     <Folder Include="Response\" />
   </ItemGroup>
 

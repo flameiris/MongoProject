@@ -1,12 +1,9 @@
-﻿using AutoMapper;
-using CSRedis;
-using Iris.FrameCore.AutoMapper;
+﻿using CSRedis;
 using Iris.FrameCore.RabbitMQ;
 using Iris.FrameCore.Resolvers;
 using Iris.Infrastructure.Extensions;
 using Iris.MongoDB;
 using Iris.MongoDB.Extensions;
-using Iris.UserApi.Filters;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
@@ -21,7 +18,7 @@ using System.Globalization;
 using System.IO;
 using System.Reflection;
 
-namespace Iris.UserApi.Extensions
+namespace Iris.FrameCore.ApiExtensions
 {
     public static class ServiceCollectionExtensions
     {
@@ -41,8 +38,6 @@ namespace Iris.UserApi.Extensions
             AddRedis(services, configuration);
 
             AddRabbitMQ(services, configuration);
-
-            AddAutoMapper(services);
 
             AddHttpClient(services, configuration);
 
@@ -66,11 +61,11 @@ namespace Iris.UserApi.Extensions
                 //跨域
                 //mvcOptions.Filters.Add(new CorsAuthorizationFilterFactory("AllowSpecificOrigin"));
 
-                //接口参数校验
-                mvcOptions.Filters.Add(typeof(ParameterCheckAttribute));
+                ////接口参数校验
+                //mvcOptions.Filters.Add(typeof(ParameterCheckAttribute));
 
-                // 结果过滤器
-                mvcOptions.Filters.Add(typeof(ResponseResultAttribute));
+                //// 结果过滤器
+                //mvcOptions.Filters.Add(typeof(ResponseResultAttribute));
 
                 //是否使用重点路由，不使用
                 mvcOptions.EnableEndpointRouting = false;
@@ -145,30 +140,6 @@ namespace Iris.UserApi.Extensions
 
 
         /// <summary>
-        /// 新增AutoMapper依赖注入
-        /// </summary>
-        /// <param name="services"></param>
-        /// <param name="configuration"></param>
-        /// <returns></returns>
-        private static void AddAutoMapper(IServiceCollection services)
-        {
-            var configuration = new MapperConfiguration(cfg =>
-            {
-                //cfg.AddMaps("Iris.Models");
-
-                //cfg.CreateMap(typeof(User), typeof(UserForDetailDto));
-
-                cfg.AddProfile(new AutoMapProfile());
-            });
-            configuration.AssertConfigurationIsValid();
-            var mapper = configuration.CreateMapper();
-
-            services.AddSingleton(typeof(IMapper), mapper);
-
-        }
-
-
-        /// <summary>
         /// 新增 HttpClient 依赖注入
         /// </summary>
         /// <param name="services"></param>
@@ -232,7 +203,7 @@ namespace Iris.UserApi.Extensions
             {
                 services.AddSwaggerGen(c =>
                 {
-                    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Iris.UserApi", Version = "v1" });
+                    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Iris.AgentApi", Version = "v1" });
 
                     var mvcXmlFile = $"{ Assembly.GetEntryAssembly().GetName().Name }.xml";
                     var entityXmlFile = $"Iris.Models.xml";

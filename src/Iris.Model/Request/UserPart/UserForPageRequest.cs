@@ -1,7 +1,7 @@
 ﻿using Iris.Models.Enums;
 using System;
 
-namespace Iris.Models.Request
+namespace Iris.Models.Request.UserPart
 {
     /// <summary>
     /// 请求类

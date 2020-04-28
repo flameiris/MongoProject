@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AssemblyName>Iris.Service</AssemblyName>
+    <RootNamespace>Iris.Service</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="IService\" />
+    <Folder Include="Service\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Iris.FrameCore\Iris.FrameCore.csproj" />
+  </ItemGroup>
+
+</Project>

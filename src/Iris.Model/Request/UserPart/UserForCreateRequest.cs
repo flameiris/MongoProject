@@ -1,4 +1,4 @@
-﻿namespace Iris.Models.Request
+﻿namespace Iris.Models.Request.UserPart
 {
 
     public class UserForCreateRequest

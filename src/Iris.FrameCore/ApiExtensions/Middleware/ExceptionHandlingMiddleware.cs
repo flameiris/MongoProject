@@ -6,7 +6,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-namespace Iris.UserApi.Extensions.Middlewares
+namespace Iris.FrameCore.ApiExtensions.Middlewares
 {
     /// <summary>
     /// 异常捕获中间件

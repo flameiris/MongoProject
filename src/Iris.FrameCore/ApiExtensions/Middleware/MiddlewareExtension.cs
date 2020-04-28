@@ -1,7 +1,7 @@
-﻿using Iris.UserApi.Extensions.Middlewares;
+﻿using Iris.FrameCore.ApiExtensions.Middlewares;
 using Microsoft.AspNetCore.Builder;
 
-namespace Iris.UserApi.Extensions.Middleware
+namespace Iris.FrameCore.ApiExtensions.Middleware
 {
     public static class ExceptionHandlingExtensions
     {

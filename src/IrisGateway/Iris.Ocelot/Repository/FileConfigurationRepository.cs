@@ -45,11 +45,11 @@ namespace Iris.Ocelot.Repository
             glb.BaseUrl = g.BaseUrl;
             glb.DownstreamScheme = g.DownstreamScheme;
             glb.RequestIdKey = g.RequestIdKey;
-            glb.RateLimitOptions = g.RateLimitOptions?.Adapt<FileRateLimitOptions>();
-            glb.HttpHandlerOptions = g.HttpHandlerOptions?.Adapt<FileHttpHandlerOptions>();
-            glb.LoadBalancerOptions = g.LoadBalancerOptions?.Adapt<FileLoadBalancerOptions>();
-            glb.QoSOptions = g.QoSOptions?.Adapt<FileQoSOptions>();
-            glb.ServiceDiscoveryProvider = g.ServiceDiscoveryProvider?.Adapt<FileServiceDiscoveryProvider>();
+            glb.RateLimitOptions = g.RateLimitOptions?.Adapt<FileRateLimitOptions>() ?? new FileRateLimitOptions();
+            glb.HttpHandlerOptions = g.HttpHandlerOptions?.Adapt<FileHttpHandlerOptions>() ?? new FileHttpHandlerOptions();
+            glb.LoadBalancerOptions = g.LoadBalancerOptions?.Adapt<FileLoadBalancerOptions>() ?? new FileLoadBalancerOptions();
+            glb.QoSOptions = g.QoSOptions?.Adapt<FileQoSOptions>() ?? new FileQoSOptions();
+            glb.ServiceDiscoveryProvider = g.ServiceDiscoveryProvider?.Adapt<FileServiceDiscoveryProvider>() ?? new FileServiceDiscoveryProvider();
             file.GlobalConfiguration = glb;
 
             //赋值路由配置
@@ -58,11 +58,11 @@ namespace Iris.Ocelot.Repository
             {
                 //路由节点配置
                 var m = new FileReRoute();
-                m.FileCacheOptions = o.CacheOptions?.Adapt<FileCacheOptions>();
-                m.AuthenticationOptions = o.AuthenticationOptions?.Adapt<FileAuthenticationOptions>();
-                m.LoadBalancerOptions = o.LoadBalancerOptions?.Adapt<FileLoadBalancerOptions>();
-                m.QoSOptions = o.QoSOptions?.Adapt<FileQoSOptions>();
-                m.RateLimitOptions = o.RateLimitOptions?.Adapt<FileRateLimitRule>();
+                m.FileCacheOptions = o.CacheOptions?.Adapt<FileCacheOptions>() ?? new FileCacheOptions();
+                m.AuthenticationOptions = o.AuthenticationOptions?.Adapt<FileAuthenticationOptions>() ?? new FileAuthenticationOptions();
+                m.LoadBalancerOptions = o.LoadBalancerOptions?.Adapt<FileLoadBalancerOptions>() ?? new FileLoadBalancerOptions();
+                m.QoSOptions = o.QoSOptions?.Adapt<FileQoSOptions>() ?? new FileQoSOptions();
+                m.RateLimitOptions = o.RateLimitOptions?.Adapt<FileRateLimitRule>() ?? new FileRateLimitRule();
                 m.DelegatingHandlers = o.DelegatingHandlers;
 
                 m.UpstreamHost = o.UpstreamHost;

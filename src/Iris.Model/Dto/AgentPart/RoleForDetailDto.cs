@@ -19,7 +19,7 @@ namespace Iris.Models.Dto.AgentPart
             AgentForDetailDto m = new AgentForDetailDto();
             m.Id = _.Id;
             m.Agentname = _.Agentname;
-            m.ProfilePicture = _.ProfilePicture;
+            m.ProfilePicture = _.Avaitar;
             m.Mobile = _.Mobile;
             m.Email = _.Email;
             m.AgentType = _.AgentType;

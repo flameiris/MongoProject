@@ -1,10 +1,11 @@
-﻿using AutoMapper;
-using Iris.Infrastructure.ExtensionMethods;
+﻿using Iris.Infrastructure.ExtensionMethods;
 using Iris.Models.Common;
 using Iris.Models.Dto;
+using Iris.Models.Dto.UserPart;
 using Iris.Models.Enums;
 using Iris.Models.Model.UserPart;
 using Iris.Models.Request;
+using Iris.Models.Request.UserPart;
 using Iris.MongoDB;
 using Iris.Service.IService.UserPart;
 using MongoDB.Driver;
@@ -15,15 +16,12 @@ namespace Iris.Service.Service.UserPart
 {
     public class UserService : IUserService
     {
-        private readonly IMapper _mapper;
         private readonly IMongoDbManager<User> _userMongo;
 
         public UserService(
-            IMapper mapper,
             IMongoDbManager<User> userMongo
             )
         {
-            _mapper = mapper;
             _userMongo = userMongo;
         }
 
@@ -58,10 +56,7 @@ namespace Iris.Service.Service.UserPart
             var user = await _userMongo.GetFirstOrDefaultAsync(x => x.Id == userId && x.Version == 1.0);
             if (user == null) return BaseResponse.GetBaseResponse(BusinessStatusType.NoData);
 
-
-
-            var model = UserForDetailDto.MapTo(user);
-            return BaseResponse.GetBaseResponse(BusinessStatusType.OK, null, model);
+            return BaseResponse.GetBaseResponse(BusinessStatusType.OK, null, user);
         }
 
         /// <summary>
