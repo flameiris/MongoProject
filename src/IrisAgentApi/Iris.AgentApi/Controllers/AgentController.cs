@@ -31,7 +31,8 @@ namespace Iris.AgentApi.Controllers
         [HttpPost]
         public async Task<BaseResponse> Create(AgentForCreateUpdateRequest r)
         {
-            return await _agentService.Create(r);
+            //return await _agentService.Create(r);
+            return new BaseResponse(Models.Enums.BusinessStatusType.OK, "", new AgentForCreateUpdateRequest());
         }
 
         /// <summary>

@@ -41,14 +41,8 @@ namespace Iris.Service.Service
         /// <returns></returns>
         public async Task<BaseResponse> Create(AgentForCreateUpdateRequest r)
         {
-            Agent agent = new Agent
-            {
-                Agentname = r.Agentname,
-                Password = (r.Password + r.Salt).MD5(),
-                Salt = r.Salt,
-
-            };
-
+            var agent = r.Adapt<Agent>();
+            agent.Password = (r.Password + r.Salt).MD5();
             var flag = await _agentMongo.AddAsync(agent);
             if (!flag) return BaseResponse.GetBaseResponse(BusinessStatusType.OperateError);
             return BaseResponse.GetBaseResponse(BusinessStatusType.OK);

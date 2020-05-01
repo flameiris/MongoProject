@@ -30,7 +30,7 @@ namespace Iris.Identity.Service
             var res = await _client.PostJsonAsync(_url + requestUrl, JsonConvert.SerializeObject(r));
             if (res.code != HttpStatusCode.OK)
             {
-
+                throw new Exception($"{res.code }  {res.ret}");
             }
             return (dynamic)JObject.Parse(res.ret);
         }

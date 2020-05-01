@@ -1,5 +1,5 @@
-﻿using Iris.AgentApi.Extensions;
-using Iris.AgentApi.Extensions.Middleware;
+﻿using Iris.FrameCore.ApiExtensions;
+using Iris.FrameCore.ApiExtensions.Middleware;
 using Iris.Service.IService;
 using Iris.Service.Service;
 using Microsoft.AspNetCore.Builder;

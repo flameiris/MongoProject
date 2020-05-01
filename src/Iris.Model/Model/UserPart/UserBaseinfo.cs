@@ -16,7 +16,9 @@ namespace Iris.Models.Model.UserPart
         /// 收货地址
         /// </summary>
         public List<UserDeliveryAddress> DeliveryAddressList { get; set; }
-
-
+        /// <summary>
+        /// 通讯录
+        /// </summary>
+        public List<string> ContactBookIdList { get; set; }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using Iris.Models.Common;
 using Iris.Models.Dto;
+using Iris.Models.Dto.UserPart;
 using Iris.Models.Request;
+using Iris.Models.Request.UserPart;
 using Iris.Service.IService.UserPart;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -34,14 +36,14 @@ namespace Iris.UserApi.Controllers.UserPart
         }
 
         /// <summary>
-        /// 查询
+        /// 获取用户信息-Id
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<BaseResponse> GetUserDetail(string userId)
+        public async Task<BaseResponse> GetUserDetail(string id)
         {
-            return await _userService.GetUserDetail(userId);
+            return await _userService.GetUserDetail(id);
         }
 
         /// <summary>

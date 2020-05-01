@@ -1,7 +1,7 @@
-﻿using Iris.Service.IService.UserPart;
+﻿using Iris.FrameCore.ApiExtensions;
+using Iris.FrameCore.ApiExtensions.Middleware;
+using Iris.Service.IService.UserPart;
 using Iris.Service.Service.UserPart;
-using Iris.UserApi.Extensions;
-using Iris.UserApi.Extensions.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;

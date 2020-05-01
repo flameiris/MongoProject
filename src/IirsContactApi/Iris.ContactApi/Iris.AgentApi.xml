@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Iris.AgentApi</name>
+    </assembly>
+    <members>
+        <member name="T:Iris.AgentApi.Controllers.UserController">
+            <summary>
+            用户控制器
+            </summary>
+        </member>
+        <member name="M:Iris.AgentApi.Controllers.UserController.Create(Iris.Models.Request.UserForCreateRequest)">
+            <summary>
+            创建
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iris.AgentApi.Controllers.UserController.GetUserListByPage(Iris.Models.Common.PageModel{Iris.Models.Request.UserForPageRequest,Iris.Models.Dto.UserForListDto})">
+            <summary>
+            分页查询
+            </summary>
+            <param name="pageModel">分页对象</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

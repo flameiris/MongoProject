@@ -32,7 +32,7 @@ namespace Iris.Models.Model.AgentPart
         /// <summary>
         /// 头像地址
         /// </summary>
-        public string ProfilePicture { get; set; }
+        public string Avaitar { get; set; }
         /// <summary>
         /// 手机号
         /// </summary>

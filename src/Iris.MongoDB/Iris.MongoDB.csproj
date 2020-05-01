@@ -17,4 +17,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Iris.Infrastructure\Iris.Infrastructure.csproj" />
   </ItemGroup>
+
+
+
+  <ItemGroup>
+    <Folder Include="MongoDBContext\" />
+  </ItemGroup>
 </Project>

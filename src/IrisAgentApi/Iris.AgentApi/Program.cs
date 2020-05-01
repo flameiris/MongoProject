@@ -11,8 +11,6 @@ namespace Iris.AgentApi
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine();
-            Console.WriteLine("1".MD5());
             CreateWebHostBuilder(args).Build().Run();
         }
 

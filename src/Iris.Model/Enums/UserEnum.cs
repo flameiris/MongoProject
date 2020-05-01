@@ -24,4 +24,20 @@ namespace Iris.Models.Enums
         [Description("锁定")]
         Cancel = 2,
     }
+
+
+    /// <summary>
+    /// 用户注册方式
+    /// </summary>
+    public enum CustomerRegistryType
+    {
+        [Description("用户名密码")]
+        AccountAndPwd = 1,
+        [Description("手机号验证码")]
+        MobileMsg = 2,
+        [Description("QQ")]
+        QQ = 3,
+        [Description("Wechat")]
+        Wechat = 4,
+    }
 }

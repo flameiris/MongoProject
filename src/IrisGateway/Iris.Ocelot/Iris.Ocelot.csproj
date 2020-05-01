@@ -6,14 +6,11 @@
 
   <ItemGroup>
     <PackageReference Include="Ocelot" Version="13.5.2" />
+    <PackageReference Include="Mapster" Version="5.3.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\Iris.MongoDB\Iris.MongoDB.csproj" />
+    <ProjectReference Include="..\..\Iris.Model\Iris.Models.csproj" />
   </ItemGroup>
   
 </Project>

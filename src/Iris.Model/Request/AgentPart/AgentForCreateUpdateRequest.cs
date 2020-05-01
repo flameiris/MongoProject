@@ -6,6 +6,14 @@ namespace Iris.Models.Request.AgentPart
 {
     public class AgentForCreateUpdateRequest
     {
+        private int myVar;
+
+        public int MyProperty
+        {
+            get { return myVar; }
+            set { myVar = value; }
+        }
+
         public string Id { get; set; }
         /// <summary>
         /// 用户名
@@ -23,7 +31,9 @@ namespace Iris.Models.Request.AgentPart
         /// 默认 GUID
         /// </summary>
         public string Salt { get; set; } = Guid.NewGuid().ToString("N");
-
+        /// <summary>
+        /// 头像地址
+        /// </summary>
         public string ProfilePicture { get; set; }
         /// <summary>
         /// 手机号
@@ -53,8 +63,6 @@ namespace Iris.Models.Request.AgentPart
         /// 用户类型，存储在数据库中为 枚举的项
         /// </summary>
         public AgentTypeEnum AgentType { get; set; } = AgentTypeEnum.Normal;
-
-
         /// <summary>
         /// 更新类型
         /// 更新基础数据

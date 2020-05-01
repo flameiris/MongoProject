@@ -171,6 +171,7 @@ namespace Iris.MongoDB
         {
             try
             {
+                @where = @where ?? (x => true);
                 return (await _collection.FindAsync(@where)).FirstOrDefault();
             }
             catch (Exception e)
@@ -188,6 +189,7 @@ namespace Iris.MongoDB
         {
             try
             {
+                @where = @where ?? (x => true);
                 return (await _collection.FindAsync(@where)).ToList();
             }
             catch (Exception e)

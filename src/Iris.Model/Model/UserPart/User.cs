@@ -2,6 +2,7 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Iris.Models.Model.UserPart
@@ -30,7 +31,6 @@ namespace Iris.Models.Model.UserPart
         /// <summary>
         /// 昵称
         /// </summary>
-        [BsonElement("Nickname")]
         public string Nickname { get; set; }
         /// <summary>
         /// 头像地址
